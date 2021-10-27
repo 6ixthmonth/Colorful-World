@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Colorful World - Make the World more Colorful</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/play.css')}}"></link>
+    <script src="{{ url_for('static', filename='js/phaser.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/gameLogic.js')}}"></script>
+</head>
+<body>
+    <input type="hidden" id="target" value="{{ target }}">
+    <input type="hidden" id="left" value="{{ left }}">
+    <input type="hidden" id="right" value="{{ right }}">
+    <div id="outer"></div>
+</body>
+</html>
