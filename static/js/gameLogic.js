@@ -203,7 +203,8 @@ function update() {
     }
 
     if (this.input.keyboard.checkDown(GAME_COMPONENT.cursors.space, 1000)) {
-        console.log("SPACE");
+        let combinedColor = setColor();
+        GAME_COMPONENT.palette[(((cursor_idx % 3) + 3) % 3)].setFillStyle(combinedColor, 1);
     }
 
     if (isLeftRotating) {
@@ -212,6 +213,7 @@ function update() {
         if (leftRotateDeg % 60 == 0) {
             left_idx++;
             console.log("left_idx: " + (left_idx % 6));
+            setColor();
             isLeftRotating = false;
         }
     }
@@ -222,9 +224,23 @@ function update() {
         if (rightRotateDeg % 60 == 0) {
             right_idx++
             console.log("right_idx: " + (right_idx % 6));
+            setColor();
             isRightRotating = false;
         }
     }
+}
+
+function setColor() {
+    let leftColor = GAME_COMPONENT.leftController[(left_idx % 6)].fillColor;
+    let leftRgb = Phaser.Display.Color.IntegerToRGB(leftColor);
+
+    let rightColor = GAME_COMPONENT.rightController[(right_idx % 6)].fillColor;
+    let rightRgb = Phaser.Display.Color.IntegerToRGB(rightColor);
+
+    let combinedColor = Phaser.Display.Color.GetColor((leftRgb.r + rightRgb.r) / 2, (leftRgb.g + rightRgb.g) / 2, (leftRgb.b + rightRgb.b) / 2);
+    GAME_COMPONENT.cursor[(((cursor_idx % 3) + 3) % 3)].setFillStyle(combinedColor, 1);
+
+    return combinedColor;
 }
 
 let game = new Phaser.Game(GAME_CONFIG);
