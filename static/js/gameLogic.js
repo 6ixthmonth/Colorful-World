@@ -205,6 +205,8 @@ function update() {
     if (this.input.keyboard.checkDown(GAME_COMPONENT.cursors.space, 1000)) {
         let combinedColor = setColor();
         GAME_COMPONENT.palette[(((cursor_idx % 3) + 3) % 3)].setFillStyle(combinedColor, 1);
+
+        check();
     }
 
     if (isLeftRotating) {
@@ -241,6 +243,22 @@ function setColor() {
     GAME_COMPONENT.cursor[(((cursor_idx % 3) + 3) % 3)].setFillStyle(combinedColor, 1);
 
     return combinedColor;
+}
+
+function check() {
+    let flag = true;
+
+    for (let i = 0; i < GAME_COMPONENT.palette.length; i++) {
+        let targetColor = GAME_COMPONENT.target[i].fillColor;
+        let palleteColor = GAME_COMPONENT.palette[i].fillColor;
+        if (targetColor != palleteColor) {
+            flag = false;
+            break;
+        }
+    }
+
+    if (flag)
+        alert("clear!");
 }
 
 let game = new Phaser.Game(GAME_CONFIG);
