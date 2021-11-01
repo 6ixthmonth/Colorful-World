@@ -6,7 +6,7 @@ const GAME_CONFIG = {
     width: GAME_WINDOW_WIDTH,
     height: GAME_WINDOW_HEIGHT,
     title: "Colorful World - Make the World more Colorful",
-    backgroundColor: "#808080",
+    backgroundColor: "#ffffff",
     parent: "wrapper",
     autoCenter: true,
     scene: {
@@ -23,34 +23,38 @@ function preload() {
 }
 
 function create() {
-    createGrid(this); // for layout
+    //createGrid(this); // for layout
 
     createTarget(this);
-    createPalette(this);
-    createCursor(this);
+    createPaletteAndCursor(this);
     createLeftController(this);
     createRightController(this);
     createBackground(this);
+    setCursor(this);
 
-    createKey(this);
-
-    console.log(GAME_COMPONENT);
+    createKeys(this);
 }
 
 function createGrid(sceneObj) {
-    sceneObj.add.rectangle(400 - 200, 300 - 150, 400, 300, 0x404040); // upper left
-    sceneObj.add.rectangle(400 + 200, 300 + 150, 400, 300, 0x404040); // lower right
-    sceneObj.add.rectangle(400 - 200 - 100, 300 + 150 - 75, 200, 150, 0xc0c0c0); // lower left upper left
-    sceneObj.add.rectangle(400 - 200 + 100, 300 + 150 + 75, 200, 150, 0xc0c0c0); // lower left lower right
-    sceneObj.add.rectangle(400 - 200 - 100 - 50, 300 + 150 + 75 - 37.5, 100, 75, 0x404040); // lower left lower left upper left
-    sceneObj.add.rectangle(400 - 200 - 100 + 50, 300 + 150 + 75 + 37.5, 100, 75, 0x404040); // lower left lower left lower right
+    sceneObj.add.rectangle(GAME_WINDOW_WIDTH / 2 - 200, GAME_WINDOW_HEIGHT / 2 - 150, 400, 300, 0x808080); // upper left
+    sceneObj.add.rectangle(GAME_WINDOW_WIDTH / 2 + 200, GAME_WINDOW_HEIGHT / 2 + 150, 400, 300, 0x808080); // lower right
+
+    sceneObj.add.rectangle(GAME_WINDOW_WIDTH / 2 - 200 - 100, GAME_WINDOW_HEIGHT / 2 + 150 - 75, 200, 150, 0x404040); // lower left upper left
+    sceneObj.add.rectangle(GAME_WINDOW_WIDTH / 2 - 200 + 100, GAME_WINDOW_HEIGHT / 2 + 150 + 75, 200, 150, 0x404040); // lower left lower right
+    sceneObj.add.rectangle(GAME_WINDOW_WIDTH / 2 - 200 + 100 - 50, GAME_WINDOW_HEIGHT / 2 + 150 + 75 - 37.5, 100, 75, 0xc0c0c0); // lower left lower right upper left
+    sceneObj.add.rectangle(GAME_WINDOW_WIDTH / 2 - 200 + 100 + 50, GAME_WINDOW_HEIGHT / 2 + 150 + 75 + 37.5, 100, 75, 0xc0c0c0); // lower left lower right lower right
+
+    sceneObj.add.rectangle(GAME_WINDOW_WIDTH / 2 + 200 - 100, GAME_WINDOW_HEIGHT / 2 + 150 - 75, 200, 150, 0x404040); // lower right upper left
+    sceneObj.add.rectangle(GAME_WINDOW_WIDTH / 2 + 200 + 100, GAME_WINDOW_HEIGHT / 2 + 150 + 75, 200, 150, 0x404040); // lower right lower right
+    sceneObj.add.rectangle(GAME_WINDOW_WIDTH / 2 + 200 - 100 - 50, GAME_WINDOW_HEIGHT / 2 + 150 + 75 - 37.5, 100, 75, 0xc0c0c0); // lower right lower left upper left
+    sceneObj.add.rectangle(GAME_WINDOW_WIDTH / 2 + 200 - 100 + 50, GAME_WINDOW_HEIGHT / 2 + 150 + 75 + 37.5, 100, 75, 0xc0c0c0); // lower right lower left lower right
 }
 
 function createTarget(sceneObj) {
     GAME_COMPONENT.target = []
-    GAME_COMPONENT.target[0] = sceneObj.add.triangle(200, 450, 0, 25, 50, -25, 100, 25, 0x808080, 0.5).setStrokeStyle(1, 0x000000);
-    GAME_COMPONENT.target[1] = sceneObj.add.rectangle(200, 475, 50, 50, 0x808080, 0.5).setStrokeStyle(1, 0x000000);
-    GAME_COMPONENT.target[2] = sceneObj.add.rectangle(200, 475, 25, 25, 0x808080, 0.5).setStrokeStyle(1, 0x000000);
+    GAME_COMPONENT.target[0] = sceneObj.add.triangle(200, 450, 0, 25, 50, -25, 100, 25, 0x808080, 1.0).setStrokeStyle(1, 0x000000);
+    GAME_COMPONENT.target[1] = sceneObj.add.rectangle(200, 475, 50, 50, 0x808080, 1.0).setStrokeStyle(1, 0x000000);
+    GAME_COMPONENT.target[2] = sceneObj.add.rectangle(200, 475, 25, 25, 0x808080, 1.0).setStrokeStyle(1, 0x000000);
     sceneObj.add.rectangle(200, 475, 25, 5, 0x000000);
     sceneObj.add.rectangle(200, 475, 5, 25, 0x000000);
 
@@ -61,48 +65,21 @@ function createTarget(sceneObj) {
     }
 }
 
-function createPalette(sceneObj) {
+function createPaletteAndCursor(sceneObj) {
     GAME_COMPONENT.palette = []
-    GAME_COMPONENT.palette[0] = sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, 0xffffff, 1.0).setStrokeStyle(1, 0x000000);
-    GAME_COMPONENT.palette[1] = sceneObj.add.rectangle(400, 350, 100, 100, 0xffffff, 1.0).setStrokeStyle(1, 0x000000);
-    GAME_COMPONENT.palette[2] = sceneObj.add.rectangle(400, 350, 50, 50, 0xffffff, 1.0).setStrokeStyle(1, 0x000000);
+    GAME_COMPONENT.cursor = []
+    GAME_COMPONENT.palette[0] = sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, 0xffffff, 1.0).setStrokeStyle(2, 0x000000);
+    GAME_COMPONENT.cursor[0] = sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, 0xffffff, 1.0);
+    GAME_COMPONENT.palette[1] = sceneObj.add.rectangle(400, 350, 100, 100, 0xffffff, 1.0).setStrokeStyle(2, 0x000000);
+    GAME_COMPONENT.cursor[1] = sceneObj.add.rectangle(400, 350, 100, 100, 0xffffff, 1.0);
+    GAME_COMPONENT.palette[2] = sceneObj.add.rectangle(400, 350, 50, 50, 0xffffff, 1.0).setStrokeStyle(2, 0x000000);
+    GAME_COMPONENT.cursor[2] = sceneObj.add.rectangle(400, 350, 50, 50, 0xffffff, 1.0);
     sceneObj.add.rectangle(400, 350, 50, 10, 0x000000);
     sceneObj.add.rectangle(400, 350, 10, 50, 0x000000);
-}
 
-function createCursor(sceneObj) {
-    GAME_COMPONENT.cursor = []
-    GAME_COMPONENT.cursor[0] = sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, 0xffff00, 0.5);
-    GAME_COMPONENT.cursor[1] = sceneObj.add.rectangle(400, 350, 100, 100, 0xffff00, 0.5);
-    GAME_COMPONENT.cursor[2] = sceneObj.add.rectangle(400, 350, 50, 50, 0xffff00, 0.5);
-
-    sceneObj.tweens.add({
-        targets: GAME_COMPONENT.cursor[0],
-        alpha: 0.5,
-        yoyo: true,
-        repeat: -1,
-        ease: 'Sine.easeInOut'
-    });
-
-    sceneObj.tweens.add({
-        targets: GAME_COMPONENT.cursor[1],
-        alpha: 0.5,
-        yoyo: true,
-        repeat: -1,
-        ease: 'Sine.easeInOut'
-    });
-
-    sceneObj.tweens.add({
-        targets: GAME_COMPONENT.cursor[2],
-        alpha: 0.5,
-        yoyo: true,
-        repeat: -1,
-        ease: 'Sine.easeInOut'
-    });
-
-    GAME_COMPONENT.cursor[0].visible = true;
-    GAME_COMPONENT.cursor[1].visible = false;
-    GAME_COMPONENT.cursor[2].visible = false;
+    GAME_COMPONENT.triangleCursor = {}
+    GAME_COMPONENT.triangleCursor.left = sceneObj.add.triangle(200, 300, 25, 0, 25, 100, 125, 50, 0x000000, 1.0);
+    GAME_COMPONENT.triangleCursor.right = sceneObj.add.triangle(600, 300, -25, 50, 75, 0, 75, 100, 0x000000, 1.0);
 }
 
 function createLeftController(sceneObj) {
@@ -145,11 +122,64 @@ function createRightController(sceneObj) {
     }
 }
 
+function setCursor(sceneObj) {
+    sceneObj.tweens.add({
+        targets: GAME_COMPONENT.cursor[0],
+        alpha: 0.0,
+        yoyo: true,
+        repeat: -1,
+        ease: "Sine.easeInOut"
+    });
+
+    sceneObj.tweens.add({
+        targets: GAME_COMPONENT.cursor[1],
+        alpha: 0.0,
+        yoyo: true,
+        repeat: -1,
+        ease: "Sine.easeInOut"
+    });
+
+    sceneObj.tweens.add({
+        targets: GAME_COMPONENT.cursor[2],
+        alpha: 0.0,
+        yoyo: true,
+        repeat: -1,
+        ease: "Sine.easeInOut"
+    });
+
+    sceneObj.tweens.add({
+        targets: GAME_COMPONENT.triangleCursor.left,
+        alpha: 0.5,
+        yoyo: true,
+        repeat: -1,
+        ease: "Sine.easeInOut"
+    });
+
+    sceneObj.tweens.add({
+        targets: GAME_COMPONENT.triangleCursor.right,
+        alpha: 0.5,
+        yoyo: true,
+        repeat: -1,
+        ease: "Sine.easeInOut"
+    });
+
+    GAME_COMPONENT.cursor[0].visible = true;
+    GAME_COMPONENT.cursor[1].visible = false;
+    GAME_COMPONENT.cursor[2].visible = false;
+
+    for (let i = 0; i < GAME_COMPONENT.cursor.length; i++) {
+        GAME_COMPONENT.cursor[i].setFillStyle(setColor(), 1);
+    }
+    
+    GAME_COMPONENT.triangleCursor.left.setFillStyle(GAME_COMPONENT.leftController[0].fillColor, 0.5);
+    GAME_COMPONENT.triangleCursor.right.setFillStyle(GAME_COMPONENT.rightController[0].fillColor, 0.5);
+}
+
 function createBackground(sceneObj) {
     
 }
 
-function createKey(sceneObj) {
+function createKeys(sceneObj) {
     // GAME_COMPONENT.keyUp = sceneObj.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
     // GAME_COMPONENT.keyDown = sceneObj.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
     // GAME_COMPONENT.keyLeft = sceneObj.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -159,15 +189,10 @@ function createKey(sceneObj) {
     GAME_COMPONENT.cursors = sceneObj.input.keyboard.createCursorKeys();
 }
 
-let isLeftRotating = false;
-let leftRotateDeg = 0;
-let isRightRotating = false;
-let rightRotateDeg = 0;
 const ONE_DEG = Math.PI / 180 * 1;
-
-let left_idx = 0;
-let right_idx = 0;
-let cursor_idx = 0;
+let isLeftRotating = isRightRotating = false;
+let leftRotateDeg = rightRotateDeg = 0;
+let left_idx = right_idx = cursor_idx = 0;
 
 function update() {
     // if (GAME_COMPONENT.keyUp.isDown) {
@@ -195,17 +220,18 @@ function update() {
     if (this.input.keyboard.checkDown(GAME_COMPONENT.cursors.up, 1000)) {
         GAME_COMPONENT.cursor[(((cursor_idx % 3) + 3) % 3)].visible = false;
         cursor_idx--;
+        GAME_COMPONENT.cursor[(((cursor_idx % 3) + 3) % 3)].setFillStyle(setColor(), 1);
         GAME_COMPONENT.cursor[(((cursor_idx % 3) + 3) % 3)].visible = true;
     } else if (this.input.keyboard.checkDown(GAME_COMPONENT.cursors.down, 1000)) {
         GAME_COMPONENT.cursor[(((cursor_idx % 3) + 3) % 3)].visible = false;
         cursor_idx++;
+        GAME_COMPONENT.cursor[(((cursor_idx % 3) + 3) % 3)].setFillStyle(setColor(), 1);
         GAME_COMPONENT.cursor[(((cursor_idx % 3) + 3) % 3)].visible = true;
     }
 
     if (this.input.keyboard.checkDown(GAME_COMPONENT.cursors.space, 1000)) {
-        let combinedColor = setColor();
-        GAME_COMPONENT.palette[(((cursor_idx % 3) + 3) % 3)].setFillStyle(combinedColor, 1);
-
+        GAME_COMPONENT.palette[(((cursor_idx % 3) + 3) % 3)].setFillStyle(setColor(), 1);
+        middleCheck();
         check();
     }
 
@@ -214,8 +240,8 @@ function update() {
         leftRotateDeg++;
         if (leftRotateDeg % 60 == 0) {
             left_idx++;
-            console.log("left_idx: " + (left_idx % 6));
-            setColor();
+            GAME_COMPONENT.cursor[(((cursor_idx % 3) + 3) % 3)].setFillStyle(setColor(), 1);
+            GAME_COMPONENT.triangleCursor.left.setFillStyle(GAME_COMPONENT.leftController[(left_idx % 6)].fillColor, 0.5);
             isLeftRotating = false;
         }
     }
@@ -225,8 +251,8 @@ function update() {
         rightRotateDeg++;
         if (rightRotateDeg % 60 == 0) {
             right_idx++
-            console.log("right_idx: " + (right_idx % 6));
-            setColor();
+            GAME_COMPONENT.cursor[(((cursor_idx % 3) + 3) % 3)].setFillStyle(setColor(), 1);
+            GAME_COMPONENT.triangleCursor.right.setFillStyle(GAME_COMPONENT.rightController[(right_idx % 6)].fillColor, 0.5);
             isRightRotating = false;
         }
     }
@@ -240,9 +266,17 @@ function setColor() {
     let rightRgb = Phaser.Display.Color.IntegerToRGB(rightColor);
 
     let combinedColor = Phaser.Display.Color.GetColor((leftRgb.r + rightRgb.r) / 2, (leftRgb.g + rightRgb.g) / 2, (leftRgb.b + rightRgb.b) / 2);
-    GAME_COMPONENT.cursor[(((cursor_idx % 3) + 3) % 3)].setFillStyle(combinedColor, 1);
 
     return combinedColor;
+}
+
+function middleCheck() {
+    let targetColor = GAME_COMPONENT.target[(((cursor_idx % 3) + 3) % 3)].fillColor;
+    let palleteColor = GAME_COMPONENT.palette[(((cursor_idx % 3) + 3) % 3)].fillColor;
+    if (targetColor != palleteColor) {
+        return false;
+    }
+    return true;
 }
 
 function check() {
@@ -258,7 +292,7 @@ function check() {
     }
 
     if (flag)
-        alert("clear!");
+        alert("CLEAR!");
 }
 
 let game = new Phaser.Game(GAME_CONFIG);
