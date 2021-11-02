@@ -6,7 +6,7 @@ const GAME_CONFIG = {
     width: GAME_WINDOW_WIDTH,
     height: GAME_WINDOW_HEIGHT,
     title: "Colorful World - Make the World more Colorful",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#808080",
     parent: "wrapper",
     autoCenter: true,
     scene: {
@@ -17,13 +17,14 @@ const GAME_CONFIG = {
 };
 
 const GAME_COMPONENT = {};
+const LINE_COLOR = 0x000000;
 
 function preload() {
     
 }
 
 function create() {
-    //createGrid(this); // for layout
+    // createGrid(this); // for layout
 
     createTarget(this);
     createPaletteAndCursor(this);
@@ -52,11 +53,11 @@ function createGrid(sceneObj) {
 
 function createTarget(sceneObj) {
     GAME_COMPONENT.target = []
-    GAME_COMPONENT.target[0] = sceneObj.add.triangle(200, 450, 0, 25, 50, -25, 100, 25, 0x808080, 1.0).setStrokeStyle(1, 0x000000);
-    GAME_COMPONENT.target[1] = sceneObj.add.rectangle(200, 475, 50, 50, 0x808080, 1.0).setStrokeStyle(1, 0x000000);
-    GAME_COMPONENT.target[2] = sceneObj.add.rectangle(200, 475, 25, 25, 0x808080, 1.0).setStrokeStyle(1, 0x000000);
-    sceneObj.add.rectangle(200, 475, 25, 5, 0x000000);
-    sceneObj.add.rectangle(200, 475, 5, 25, 0x000000);
+    GAME_COMPONENT.target[0] = sceneObj.add.triangle(200, 450, 0, 25, 50, -25, 100, 25, 0x808080, 1.0).setStrokeStyle(1, LINE_COLOR);
+    GAME_COMPONENT.target[1] = sceneObj.add.rectangle(200, 475, 50, 50, 0x808080, 1.0).setStrokeStyle(1, LINE_COLOR);
+    GAME_COMPONENT.target[2] = sceneObj.add.rectangle(200, 475, 25, 25, 0x808080, 1.0).setStrokeStyle(1, LINE_COLOR);
+    sceneObj.add.rectangle(200, 475, 25, 5, LINE_COLOR);
+    sceneObj.add.rectangle(200, 475, 5, 25, LINE_COLOR);
 
     let target = JSON.parse(document.getElementById("target").value);
     for (let i = 0; i < target.length; i++) {
@@ -68,32 +69,32 @@ function createTarget(sceneObj) {
 function createPaletteAndCursor(sceneObj) {
     GAME_COMPONENT.palette = []
     GAME_COMPONENT.cursor = []
-    GAME_COMPONENT.palette[0] = sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, 0xffffff, 1.0).setStrokeStyle(2, 0x000000);
-    GAME_COMPONENT.cursor[0] = sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, 0xffffff, 1.0);
-    GAME_COMPONENT.palette[1] = sceneObj.add.rectangle(400, 350, 100, 100, 0xffffff, 1.0).setStrokeStyle(2, 0x000000);
-    GAME_COMPONENT.cursor[1] = sceneObj.add.rectangle(400, 350, 100, 100, 0xffffff, 1.0);
-    GAME_COMPONENT.palette[2] = sceneObj.add.rectangle(400, 350, 50, 50, 0xffffff, 1.0).setStrokeStyle(2, 0x000000);
-    GAME_COMPONENT.cursor[2] = sceneObj.add.rectangle(400, 350, 50, 50, 0xffffff, 1.0);
-    sceneObj.add.rectangle(400, 350, 50, 10, 0x000000);
-    sceneObj.add.rectangle(400, 350, 10, 50, 0x000000);
+    GAME_COMPONENT.palette[0] = sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, 0xffffff, 1.0).setStrokeStyle(2, LINE_COLOR);
+    GAME_COMPONENT.cursor[0] = sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, 0xffffff, 1.0).setStrokeStyle(2, LINE_COLOR);
+    GAME_COMPONENT.palette[1] = sceneObj.add.rectangle(400, 350, 100, 100, 0xffffff, 1.0).setStrokeStyle(2, LINE_COLOR);
+    GAME_COMPONENT.cursor[1] = sceneObj.add.rectangle(400, 350, 100, 100, 0xffffff, 1.0).setStrokeStyle(2, LINE_COLOR);
+    GAME_COMPONENT.palette[2] = sceneObj.add.rectangle(400, 350, 50, 50, 0xffffff, 1.0).setStrokeStyle(2, LINE_COLOR);
+    GAME_COMPONENT.cursor[2] = sceneObj.add.rectangle(400, 350, 50, 50, 0xffffff, 1.0).setStrokeStyle(2, LINE_COLOR);
+    sceneObj.add.rectangle(400, 350, 50, 10, LINE_COLOR);
+    sceneObj.add.rectangle(400, 350, 10, 50, LINE_COLOR);
 
     GAME_COMPONENT.triangleCursor = {}
-    GAME_COMPONENT.triangleCursor.left = sceneObj.add.triangle(200, 300, 25, 0, 25, 100, 125, 50, 0x000000, 1.0);
-    GAME_COMPONENT.triangleCursor.right = sceneObj.add.triangle(600, 300, -25, 50, 75, 0, 75, 100, 0x000000, 1.0);
+    GAME_COMPONENT.triangleCursor.left = sceneObj.add.triangle(200, 300, 0, 0, 0, 100, 100, 50, 0xffffff, 1.0);
+    GAME_COMPONENT.triangleCursor.right = sceneObj.add.triangle(600, 300, 0, 50, 100, 0, 100, 100, 0xffffff, 1.0);
 }
 
 function createLeftController(sceneObj) {
-    // sceneObj.add.circle(0, 300, 100, 0x000000);
+    sceneObj.add.circle(-25, 300, 100, 0xffffff, 0.0).setStrokeStyle(5, LINE_COLOR);
     // start from right, locate clockwisely
     let circleRadius = 50;
     let signDistance = Math.sin(Math.PI / 180 * 60) * circleRadius * 2;
     GAME_COMPONENT.leftController = []
-    GAME_COMPONENT.leftController[0] = sceneObj.add.circle(0 + 100, 300 + 0, circleRadius, 0xff0000).setStrokeStyle(10, 0x000000);
-    GAME_COMPONENT.leftController[1] = sceneObj.add.circle(0 + 50, 300 + signDistance, circleRadius, 0x00ff00).setStrokeStyle(10, 0x000000);
-    GAME_COMPONENT.leftController[2] = sceneObj.add.circle(0 -50, 300 + signDistance, circleRadius, 0x0000ff).setStrokeStyle(10, 0x000000);
-    GAME_COMPONENT.leftController[3] = sceneObj.add.circle(0 -100, 300 - 0, circleRadius, 0x00ffff).setStrokeStyle(10, 0x000000);
-    GAME_COMPONENT.leftController[4] = sceneObj.add.circle(0 -50, 300 - signDistance, circleRadius, 0xff00ff).setStrokeStyle(10, 0x000000);
-    GAME_COMPONENT.leftController[5] = sceneObj.add.circle(0 + 50, 300 - signDistance, circleRadius, 0xffff00).setStrokeStyle(10, 0x000000);
+    GAME_COMPONENT.leftController[0] = sceneObj.add.circle(-25 + 100, 300 + 0, circleRadius, 0xff0000).setStrokeStyle(5, LINE_COLOR);
+    // GAME_COMPONENT.leftController[1] = sceneObj.add.circle(-25 + 50, 300 + signDistance, circleRadius, 0x00ff00).setStrokeStyle(5, LINE_COLOR);
+    GAME_COMPONENT.leftController[1] = sceneObj.add.circle(-25 -50, 300 + signDistance, circleRadius, 0x0000ff).setStrokeStyle(5, LINE_COLOR);
+    // GAME_COMPONENT.leftController[3] = sceneObj.add.circle(-25 -100, 300 - 0, circleRadius, 0x00ffff).setStrokeStyle(5, LINE_COLOR);
+    GAME_COMPONENT.leftController[2] = sceneObj.add.circle(-25 -50, 300 - signDistance, circleRadius, 0xff00ff).setStrokeStyle(5, LINE_COLOR);
+    // GAME_COMPONENT.leftController[5] = sceneObj.add.circle(-25 + 50, 300 - signDistance, circleRadius, 0xffff00).setStrokeStyle(5, LINE_COLOR);
 
     let left = JSON.parse(document.getElementById("left").value);
     for (let i = 0; i < left.length; i++) {
@@ -103,17 +104,17 @@ function createLeftController(sceneObj) {
 }
 
 function createRightController(sceneObj) {
-    // sceneObj.add.circle(800, 300, 100, 0x000000);
+    sceneObj.add.circle(825, 300, 100, 0xffffff, 0.0).setStrokeStyle(5, LINE_COLOR);
     // start from left, locate counter-clockwisely
     let circleRadius = 50;
     let signDistance = Math.sin(Math.PI / 180 * 60) * circleRadius * 2;
     GAME_COMPONENT.rightController = []
-    GAME_COMPONENT.rightController[0] = sceneObj.add.circle(GAME_WINDOW_WIDTH - 100, 300 + 0, circleRadius, 0xff0000).setStrokeStyle(10, 0x000000);
-    GAME_COMPONENT.rightController[1] = sceneObj.add.circle(GAME_WINDOW_WIDTH - 50, 300 + signDistance, circleRadius, 0x00ff00).setStrokeStyle(10, 0x000000);
-    GAME_COMPONENT.rightController[2] = sceneObj.add.circle(GAME_WINDOW_WIDTH + 50, 300 + signDistance, circleRadius, 0x0000ff).setStrokeStyle(10, 0x000000);
-    GAME_COMPONENT.rightController[3] = sceneObj.add.circle(GAME_WINDOW_WIDTH + 100, 300 - 0, circleRadius, 0x00ffff).setStrokeStyle(10, 0x000000);
-    GAME_COMPONENT.rightController[4] = sceneObj.add.circle(GAME_WINDOW_WIDTH + 50, 300 - signDistance, circleRadius, 0xff00ff).setStrokeStyle(10, 0x000000);
-    GAME_COMPONENT.rightController[5] = sceneObj.add.circle(GAME_WINDOW_WIDTH - 50, 300 - signDistance, circleRadius, 0xffff00).setStrokeStyle(10, 0x000000);
+    GAME_COMPONENT.rightController[0] = sceneObj.add.circle(GAME_WINDOW_WIDTH + 25 - 100, 300 + 0, circleRadius, 0xff0000).setStrokeStyle(5, LINE_COLOR);
+    // GAME_COMPONENT.rightController[1] = sceneObj.add.circle(GAME_WINDOW_WIDTH + 25 - 50, 300 + signDistance, circleRadius, 0x00ff00).setStrokeStyle(5, LINE_COLOR);
+    GAME_COMPONENT.rightController[1] = sceneObj.add.circle(GAME_WINDOW_WIDTH + 25 + 50, 300 + signDistance, circleRadius, 0x0000ff).setStrokeStyle(5, LINE_COLOR);
+    // GAME_COMPONENT.rightController[3] = sceneObj.add.circle(GAME_WINDOW_WIDTH + 25 + 100, 300 - 0, circleRadius, 0x00ffff).setStrokeStyle(5, LINE_COLOR);
+    GAME_COMPONENT.rightController[2] = sceneObj.add.circle(GAME_WINDOW_WIDTH + 25 + 50, 300 - signDistance, circleRadius, 0xff00ff).setStrokeStyle(5, LINE_COLOR);
+    // GAME_COMPONENT.rightController[5] = sceneObj.add.circle(GAME_WINDOW_WIDTH + 25 - 50, 300 - signDistance, circleRadius, 0xffff00).setStrokeStyle(5, LINE_COLOR);
 
     let right = JSON.parse(document.getElementById("right").value);
     for (let i = 0; i < GAME_COMPONENT.rightController.length; i++) {
@@ -171,8 +172,8 @@ function setCursor(sceneObj) {
         GAME_COMPONENT.cursor[i].setFillStyle(setColor(), 1);
     }
     
-    GAME_COMPONENT.triangleCursor.left.setFillStyle(GAME_COMPONENT.leftController[0].fillColor, 0.5);
-    GAME_COMPONENT.triangleCursor.right.setFillStyle(GAME_COMPONENT.rightController[0].fillColor, 0.5);
+    GAME_COMPONENT.triangleCursor.left.setFillStyle(GAME_COMPONENT.leftController[0].fillColor, 1.0);
+    GAME_COMPONENT.triangleCursor.right.setFillStyle(GAME_COMPONENT.rightController[0].fillColor, 1.0);
 }
 
 function createBackground(sceneObj) {
@@ -231,38 +232,38 @@ function update() {
 
     if (this.input.keyboard.checkDown(GAME_COMPONENT.cursors.space, 1000)) {
         GAME_COMPONENT.palette[(((cursor_idx % 3) + 3) % 3)].setFillStyle(setColor(), 1);
-        middleCheck();
+        // middleCheck();
         check();
     }
 
     if (isLeftRotating) {
-        Phaser.Actions.RotateAround(GAME_COMPONENT.leftController, { x: 0, y: 300 }, ONE_DEG * -1);
-        leftRotateDeg++;
-        if (leftRotateDeg % 60 == 0) {
+        Phaser.Actions.RotateAround(GAME_COMPONENT.leftController, { x: -25, y: 300 }, ONE_DEG * -2);
+        leftRotateDeg += 2;
+        if (leftRotateDeg % 120 == 0) {
             left_idx++;
             GAME_COMPONENT.cursor[(((cursor_idx % 3) + 3) % 3)].setFillStyle(setColor(), 1);
-            GAME_COMPONENT.triangleCursor.left.setFillStyle(GAME_COMPONENT.leftController[(left_idx % 6)].fillColor, 0.5);
+            GAME_COMPONENT.triangleCursor.left.setFillStyle(GAME_COMPONENT.leftController[(left_idx % 3)].fillColor, 1.0);
             isLeftRotating = false;
         }
     }
 
     if (isRightRotating) {
-        Phaser.Actions.RotateAround(GAME_COMPONENT.rightController, { x: 800, y: 300 }, ONE_DEG * 1);
-        rightRotateDeg++;
-        if (rightRotateDeg % 60 == 0) {
+        Phaser.Actions.RotateAround(GAME_COMPONENT.rightController, { x: 825, y: 300 }, ONE_DEG * 2);
+        rightRotateDeg += 2;
+        if (rightRotateDeg % 120 == 0) {
             right_idx++
             GAME_COMPONENT.cursor[(((cursor_idx % 3) + 3) % 3)].setFillStyle(setColor(), 1);
-            GAME_COMPONENT.triangleCursor.right.setFillStyle(GAME_COMPONENT.rightController[(right_idx % 6)].fillColor, 0.5);
+            GAME_COMPONENT.triangleCursor.right.setFillStyle(GAME_COMPONENT.rightController[(right_idx % 3)].fillColor, 1.0);
             isRightRotating = false;
         }
     }
 }
 
 function setColor() {
-    let leftColor = GAME_COMPONENT.leftController[(left_idx % 6)].fillColor;
+    let leftColor = GAME_COMPONENT.leftController[(left_idx % 3)].fillColor;
     let leftRgb = Phaser.Display.Color.IntegerToRGB(leftColor);
 
-    let rightColor = GAME_COMPONENT.rightController[(right_idx % 6)].fillColor;
+    let rightColor = GAME_COMPONENT.rightController[(right_idx % 3)].fillColor;
     let rightRgb = Phaser.Display.Color.IntegerToRGB(rightColor);
 
     let combinedColor = Phaser.Display.Color.GetColor((leftRgb.r + rightRgb.r) / 2, (leftRgb.g + rightRgb.g) / 2, (leftRgb.b + rightRgb.b) / 2);
@@ -292,7 +293,11 @@ function check() {
     }
 
     if (flag)
-        alert("CLEAR!");
+        clear();
+}
+
+function clear() {
+    alert("CLEAR!");
 }
 
 let game = new Phaser.Game(GAME_CONFIG);

@@ -58,9 +58,9 @@ def create_app(test_config=None):
         # print(chk_list)
 
         # Add more dummy selections.
-        for i in range(target_cnt):
-            left.append([randrange(0x100) for _ in range(3)])
-            right.append([randrange(0x100) for _ in range(3)])
+        # for i in range(target_cnt):
+        #     left.append([randrange(0x100) for _ in range(3)])
+        #     right.append([randrange(0x100) for _ in range(3)])
 
         # Shuffle lists.
         left = sample(left, k=len(left))

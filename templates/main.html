@@ -2,14 +2,72 @@
 <html>
 <head>
     <title>Colorful World - Make the World more Colorful</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}"></link>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/main.css')}}" rel="stylesheet">
 </head>
-<body>
-    <h1>Colorful World</h1>
+<body class="bg-secondary">
+    <h1 class="text-dark text-center">Colorful World</h1>
 
-    <div>
-        <a href="/play_game">PLAY GAME</a>
-        <a>HOW TO PLAY</a>
+    <div class="d-grid gap-3 d-md-flex justify-content-md-center">
+        <a href="/play_game" class="btn btn-dark btn-lg" role="button">PLAY GAME</a>
+        <a href="#howtoplayModal" class="btn btn-light btn-lg" role="button" data-bs-toggle="modal">HOW TO PLAY</a>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="howtoplayModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h3 class="modal-title w-100">HOW TO PLAY (1 / 2)</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-4 p-0">UP/DOWN</div>
+                            <div class="col-md-4 p-0">LEFT/RIGHT</div>
+                            <div class="col-md-4 p-0">SPACE</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 p-0">CHOOSE A PALETTE TO FILL</div>
+                            <div class="col-md-4 p-0">ROTATE COLOR PALETTE LENSE</div>
+                            <div class="col-md-4 p-0">FILL COLOR</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#nextModal">NEXT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Second Modal -->
+    <div class="modal fade" id="nextModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h3 class="modal-title w-100">HOW TO PLAY (2 / 2)</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 p-0">COMPLETE COLOR</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 p-0">IMG1</div>
+                            <div class="col-md-6 p-0">IMG2</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-light" data-bs-dismiss="modal">CLOSE</button>
+                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#howtoplayModal">PREVIOUS</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
 </body>
 </html>
