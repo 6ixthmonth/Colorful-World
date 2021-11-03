@@ -3,6 +3,7 @@
 <head>
     <title>Colorful World - Make the World more Colorful</title>
     <link href="{{ url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/main.css')}}" rel="stylesheet">
     <script src="{{ url_for('static', filename='js/phaser.min.js')}}"></script>
     <script src="{{ url_for('static', filename='js/gameLogic.js')}}"></script>
 </head>
@@ -12,6 +13,31 @@
     <input type="hidden" id="right" value="{{ right }}">
     <div id="wrapper"></div>
 
+    <!-- Modal -->
+    <div id="stageClearModal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h3 class="modal-title w-100">STAGE CLEAR</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <h2>CONGRATULATIONS!</h2>
+                    <h4>YOU MADE THE WORLD MORE COLORFUL!</h4>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-light" data-bs-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed-bottom d-flex justify-content-between">
+        <a href="/" class="btn btn-light btn-lg" role="button">BACK</a>
+        <button class="btn btn-dark btn-lg" onclick="reset();">RESET</button>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/jquery-3.6.0.min.js')}}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
 </body>
 </html>
