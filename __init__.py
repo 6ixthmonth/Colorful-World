@@ -22,7 +22,7 @@ def create_app(test_config=None):
     try:
         os.makedirs(app.instance_path)
     except OSError:
-        pass
+        print("Cannot find instance folder.")
 
     @app.route('/')
     def main():
@@ -56,11 +56,6 @@ def create_app(test_config=None):
         # Validation check.
         # chk_list = [target[i][j] * 2 == (left[i][j] + right[i][j]) for i in range(len(target)) for j in range(len(target[i]))]
         # print(chk_list)
-
-        # Add more dummy selections.
-        # for i in range(target_cnt):
-        #     left.append([randrange(0x100) for _ in range(3)])
-        #     right.append([randrange(0x100) for _ in range(3)])
 
         # Shuffle lists.
         left = sample(left, k=len(left))

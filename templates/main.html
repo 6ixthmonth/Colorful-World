@@ -4,65 +4,130 @@
     <title>Colorful World - Make the World more Colorful</title>
     <link href="{{ url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/main.css')}}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/phaser.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/main.js')}}"></script>
 </head>
 <body class="bg-secondary">
-    <h1 class="text-dark text-center">Colorful World</h1>
+    <h1 class="text-dark text-center display-1">Colorful World</h1>
 
     <div class="d-grid gap-3 d-md-flex justify-content-md-center">
         <a href="/play_game" class="btn btn-dark btn-lg" role="button">PLAY GAME</a>
-        <a href="#howtoplayModal" class="btn btn-light btn-lg" role="button" data-bs-toggle="modal">HOW TO PLAY</a>
+        <a href="#firstModal" class="btn btn-light btn-lg" role="button" data-bs-toggle="modal">HOW TO PLAY</a>
     </div>
 
-    <!-- Modal -->
-    <div id="howtoplayModal" class="modal fade">
+    <div id="wrapper"></div>
+
+    <!-- first modal -->
+    <div id="firstModal" class="modal fade">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <h3 class="modal-title w-100">HOW TO PLAY (1 / 2)</h3>
+                    <h3 class="modal-title w-100">HOW TO PLAY (1 / 5)</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body text-center">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-4 p-0">UP/DOWN</div>
-                            <div class="col-md-4 p-0">LEFT/RIGHT</div>
-                            <div class="col-md-4 p-0">SPACE</div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 p-0">CHOOSE A PALETTE TO FILL</div>
-                            <div class="col-md-4 p-0">ROTATE COLOR PALETTE LENSE</div>
-                            <div class="col-md-4 p-0">FILL COLOR</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#nextModal">NEXT</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Second Modal -->
-    <div id="nextModal" class="modal fade">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header text-center">
-                    <h3 class="modal-title w-100">HOW TO PLAY (2 / 2)</h3>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-12 p-0">COMPLETE COLOR</div>
+                            <div class="col-md-12 p-0">UP/DOWN</div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 p-0">IMG1</div>
                             <div class="col-md-6 p-0">IMG2</div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12 p-0">DESCRIPTION</div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-light" data-bs-dismiss="modal">CLOSE</button>
-                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#howtoplayModal">PREVIOUS</button>
+                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#secondModal">NEXT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- second modal -->
+    <div id="secondModal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h3 class="modal-title w-100">HOW TO PLAY (2 / 5)</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 p-0">LEFT/RIGHT</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 p-0">IMG1</div>
+                            <div class="col-md-6 p-0">IMG2</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 p-0">DESCRIPTION</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#firstModal">PREVIOUS</button>
+                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#thirdModal">NEXT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- third modal -->
+    <div id="thirdModal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h3 class="modal-title w-100">HOW TO PLAY (3 / 5)</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 p-0">SPACE</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 p-0">IMG1</div>
+                            <div class="col-md-6 p-0">IMG2</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 p-0">DESCRIPTION</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#secondModal">PREVIOUS</button>
+                    <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#fourthModal">NEXT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- fourth modal -->
+    <div id="fourthModal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h3 class="modal-title w-100">HOW TO PLAY (4 / 5)</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12 p-0">OBJECTIVE</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 p-0">IMG1</div>
+                            <div class="col-md-6 p-0">IMG2</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 p-0">DESCRIPTION</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#thirdModal">PREVIOUS</button>
+                    <button class="btn btn-dark" data-bs-dismiss="modal">CLOSE</button>
                 </div>
             </div>
         </div>
