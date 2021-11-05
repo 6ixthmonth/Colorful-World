@@ -2,12 +2,13 @@
 <html>
 <head>
     <title>Colorful World - Make the World more Colorful</title>
-    <link href="{{ url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/main.css')}}" rel="stylesheet">
-    <script src="{{ url_for('static', filename='js/phaser.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='js/main.js')}}"></script>
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/phaser.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </head>
-<body class="bg-secondary">
+<!-- <body class="bg-secondary"> -->
+<body style="background-color:var(--bs-gray)">
     <h1 class="text-dark text-center display-1">Colorful World</h1>
 
     <div class="d-grid gap-3 d-md-flex justify-content-md-center">
@@ -22,20 +23,24 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <h3 class="modal-title w-100">HOW TO PLAY (1 / 5)</h3>
+                    <h3 class="modal-title w-100">HOW TO PLAY (1 / 4)</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body text-center">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-12 p-0">UP/DOWN</div>
+                            <div class="col-md-12 p-0 h3">SELECT TARGET</div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 p-0">IMG1</div>
-                            <div class="col-md-6 p-0">IMG2</div>
+                            <div class="col-md-6 p-0">
+                                <div class="border border-1 border-dark" style="width:380px; height:380px;">IMG1</div>
+                            </div>
+                            <div class="col-md-6 p-0">
+                                <div class="border border-1 border-dark" style="width:380px; height:380px;">IMG2</div>
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12 p-0">DESCRIPTION</div>
+                            <div class="col-md-12 p-0 h5">PRESS UP/DOWN ARROW KEY TO SELECT TARGET TO FILL COLOR</div>
                         </div>
                     </div>
                 </div>
@@ -50,20 +55,24 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <h3 class="modal-title w-100">HOW TO PLAY (2 / 5)</h3>
+                    <h3 class="modal-title w-100">HOW TO PLAY (2 / 4)</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body text-center">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-12 p-0">LEFT/RIGHT</div>
+                            <div class="col-md-12 p-0 h3">ROTATE PALETTE</div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 p-0">IMG1</div>
-                            <div class="col-md-6 p-0">IMG2</div>
+                            <div class="col-md-6 p-0">
+                                <div class="border border-1 border-dark" style="width:380px; height:380px;">IMG1</div>
+                            </div>
+                            <div class="col-md-6 p-0">
+                                <div class="border border-1 border-dark" style="width:380px; height:380px;">IMG2</div>
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12 p-0">DESCRIPTION</div>
+                            <div class="col-md-12 p-0 h5">PRESS LEFT/RIGHT ARROW KEY TO ROTATE COLOR PALETTE ON LEFT/RIGHT-SIDE</div>
                         </div>
                     </div>
                 </div>
@@ -79,20 +88,24 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <h3 class="modal-title w-100">HOW TO PLAY (3 / 5)</h3>
+                    <h3 class="modal-title w-100">HOW TO PLAY (3 / 4)</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body text-center">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-12 p-0">SPACE</div>
+                            <div class="col-md-12 p-0 h3">FILL COLOR</div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 p-0">IMG1</div>
-                            <div class="col-md-6 p-0">IMG2</div>
+                            <div class="col-md-6 p-0">
+                                <div class="border border-1 border-dark" style="width:380px; height:380px;">IMG1</div>
+                            </div>
+                            <div class="col-md-6 p-0">
+                                <div class="border border-1 border-dark" style="width:380px; height:380px;">IMG2</div>
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12 p-0">DESCRIPTION</div>
+                            <div class="col-md-12 p-0 h5">PRESS SPACE KEY TO COMBINE LEFTSIDE & RIGHTSIDE COLORS AND FILL IT ONTO TARGET</div>
                         </div>
                     </div>
                 </div>
@@ -108,20 +121,24 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <h3 class="modal-title w-100">HOW TO PLAY (4 / 5)</h3>
+                    <h3 class="modal-title w-100">HOW TO PLAY (4 / 4)</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body text-center">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-12 p-0">OBJECTIVE</div>
+                            <div class="col-md-12 p-0 h3">OBJECTIVE</div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6 p-0">IMG1</div>
-                            <div class="col-md-6 p-0">IMG2</div>
+                            <div class="col-md-6 p-0">
+                                <div class="border border-1 border-dark" style="width:380px; height:380px;">IMG1</div>
+                            </div>
+                            <div class="col-md-6 p-0">
+                                <div class="border border-1 border-dark" style="width:380px; height:380px;">IMG2</div>
+                            </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12 p-0">DESCRIPTION</div>
+                            <div class="col-md-12 p-0 h5">MAKE TARGET COLORS SAME AS IMAGE ON TOP OF SCREEN</div>
                         </div>
                     </div>
                 </div>
@@ -133,6 +150,6 @@
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
 </body>
 </html>
