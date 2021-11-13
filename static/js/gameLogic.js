@@ -8,7 +8,7 @@ const GAME_CONFIG = {
     title: "Colorful World - Make the World more Colorful",
     backgroundColor: "#ffffff",
     parent: "wrapper",
-    autoCenter: true,
+    // autoCenter: true,
     scene: {
         preload: preload,
         create: create,
@@ -234,7 +234,6 @@ function getColor() {
     let rightRgb = Phaser.Display.Color.IntegerToRGB(rightColor);
 
     let combinedColor = Phaser.Display.Color.GetColor((leftRgb.r + rightRgb.r) / 2, (leftRgb.g + rightRgb.g) / 2, (leftRgb.b + rightRgb.b) / 2);
-    console.log(combinedColor);
     return combinedColor;
 }
 
