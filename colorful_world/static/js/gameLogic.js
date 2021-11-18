@@ -16,9 +16,9 @@ const GAME_CONFIG = {
     }
 };
 
-const GAME_COMPONENT = {};
 const BLACK = 0x000000;
 const WHITE = 0xffffff;
+const GAME_COMPONENT = {};
 
 function preload() {
     
@@ -28,7 +28,7 @@ function create() {
     // createGrid(this); // for layout
 
     createBackground(this);
-    createTarget(this);
+    createTargets(this);
 
     createObjectives(this);
     createControllers(this);
@@ -67,7 +67,7 @@ function createBackground(sceneObj) {
     sceneObj.add.circle(825, 300, 100, WHITE, 0.0).setStrokeStyle(5, BLACK);
 }
 
-function createTarget(sceneObj) {
+function createTargets(sceneObj) {
     GAME_COMPONENT.targets = []
 
     GAME_COMPONENT.targets[0] = sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(1);
