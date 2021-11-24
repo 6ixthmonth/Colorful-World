@@ -10,7 +10,6 @@ const GAME_CONFIG = {
     parent: "wrapper",
     // autoCenter: true,
     scene: {
-        preload: preload,
         create: create,
         update: update
     }
@@ -20,13 +19,7 @@ const BLACK = 0x000000;
 const WHITE = 0xffffff;
 const GAME_COMPONENT = {};
 
-function preload() {
-    
-}
-
 function create() {
-    // createGrid(this); // for layout
-
     createBackground(this);
     createTargets(this);
 
@@ -41,24 +34,6 @@ function create() {
     initIndicators(this);
 
     createKeys(this);
-}
-
-function createGrid(sceneObj) {
-    let halfWidth = GAME_WINDOW_WIDTH / 2;
-    let halfHeight = GAME_WINDOW_HEIGHT / 2;
-
-    sceneObj.add.rectangle(halfWidth - 200, halfHeight - 150, halfWidth, halfHeight, 0x808080); // upper left
-    sceneObj.add.rectangle(halfWidth + 200, halfHeight + 150, halfWidth, halfHeight, 0x808080); // lower right
-
-    sceneObj.add.rectangle(halfWidth - 200 - 100, halfHeight + 150 - 75, halfWidth / 2, halfHeight / 2, 0x404040); // lower left upper left
-    sceneObj.add.rectangle(halfWidth - 200 + 100, halfHeight + 150 + 75, halfWidth / 2, halfHeight / 2, 0x404040); // lower left lower right
-    sceneObj.add.rectangle(halfWidth - 200 + 100 - 50, halfHeight + 150 + 75 - 37.5, halfWidth / 4, halfHeight / 4, 0xc0c0c0); // lower left lower right upper left
-    sceneObj.add.rectangle(halfWidth - 200 + 100 + 50, halfHeight + 150 + 75 + 37.5, halfWidth / 4, halfHeight / 4, 0xc0c0c0); // lower left lower right lower right
-
-    sceneObj.add.rectangle(halfWidth + 200 - 100, halfHeight + 150 - 75, halfWidth / 2, halfHeight / 2, 0x404040); // lower right upper left
-    sceneObj.add.rectangle(halfWidth + 200 + 100, halfHeight + 150 + 75, halfWidth / 2, halfHeight / 2, 0x404040); // lower right lower right
-    sceneObj.add.rectangle(halfWidth + 200 - 100 - 50, halfHeight + 150 + 75 - 37.5, halfWidth / 4, halfHeight / 4, 0xc0c0c0); // lower right lower left upper left
-    sceneObj.add.rectangle(halfWidth + 200 - 100 + 50, halfHeight + 150 + 75 + 37.5, halfWidth / 4, halfHeight / 4, 0xc0c0c0); // lower right lower left lower right
 }
 
 function createBackground(sceneObj) {
@@ -122,7 +97,8 @@ function createIndicators(sceneObj) {
 function initObjectives() {
     let objectiveValues = JSON.parse(document.getElementById("target").value);
     for (let i = 0; i < objectiveValues.length; i++) {
-        let objectiveColor = Phaser.Display.Color.GetColor(objectiveValues[i][0], objectiveValues[i][1], objectiveValues[i][2]);
+        // let objectiveColor = Phaser.Display.Color.GetColor(objectiveValues[i][0], objectiveValues[i][1], objectiveValues[i][2]);
+        let objectiveColor = objectiveValues[i][0] * (16 ** 4) + objectiveValues[i][1] * (16 ** 2) + objectiveValues[i][2];
         GAME_COMPONENT.objectives[i].setFillStyle(objectiveColor, 1);
     }
 }
