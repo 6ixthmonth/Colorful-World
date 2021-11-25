@@ -95,7 +95,7 @@ function createIndicators(sceneObj) {
 }
 
 function initObjectives() {
-    let objectiveValues = JSON.parse(document.getElementById("target").value);
+    let objectiveValues = JSON.parse(document.getElementById("objective").value);
     for (let i = 0; i < objectiveValues.length; i++) {
         // let objectiveColor = Phaser.Display.Color.GetColor(objectiveValues[i][0], objectiveValues[i][1], objectiveValues[i][2]);
         let objectiveColor = objectiveValues[i][0] * (16 ** 4) + objectiveValues[i][1] * (16 ** 2) + objectiveValues[i][2];

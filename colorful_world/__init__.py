@@ -1,28 +1,13 @@
-import os
 from random import randrange, sample
 
 from flask import Flask, render_template
 
-def create_app(test_config=None):
+def create_app():
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__)
     app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+        SECRET_KEY='dev'
     )
-
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
-
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        print("Cannot find instance folder.")
 
     @app.route('/')
     def main():
@@ -32,35 +17,42 @@ def create_app(test_config=None):
     def play_game():
         """Generate game components and response to game play page."""
 
-        # Generate target rgb values. This will be objective for this game.
-        target_cnt = 3
-        target = [[randrange(0x100) for _ in range(3)] for _ in range(target_cnt)]
+        objective, left, right = create_game_val()
 
-        # Create two empty nested lists. This will be selections player can control.
-        left = [[] for _ in target]
-        right = [[] for _ in target]
-       
-        # Access to rgb values of each target.
-        for i in range(target_cnt):
-            for target_rgb in target[i]:
-                # Calculate maximum range of variance. Every rgb value must be in [0, 255].
-                max_gap = target_rgb if target_rgb < 128 else 255 - target_rgb
-                if (max_gap > 0):
-                    max_gap = randrange(max_gap + 1)
-
-                # Set rgb values to lists.
-                left_rgb, right_rgb = sample((target_rgb + max_gap, target_rgb - max_gap), k=2)
-                left[i].append(left_rgb)
-                right[i].append(right_rgb)
-
-        # Validation check.
-        # chk_list = [target[i][j] * 2 == (left[i][j] + right[i][j]) for i in range(len(target)) for j in range(len(target[i]))]
-        # print(chk_list)
-
-        # Shuffle lists.
-        left = sample(left, k=len(left))
-        right = sample(right, k=len(right))
-
-        return render_template('play_game.html', target=target, left=left, right=right)
+        return render_template('play_game.html', objective=objective, left=left, right=right)
 
     return app
+
+def create_game_val():
+     # Generate objective rgb values. This will be goal for this game.
+    objective_cnt = 3
+    objective = [[randrange(0x100) for _ in range(3)] for _ in range(objective_cnt)]
+
+    # Create two empty nested lists. This will be selections player can control.
+    left = [[] for _ in objective]
+    right = [[] for _ in objective]
+    
+    # Access to rgb values of each objective.
+    for i in range(objective_cnt):
+        for objective_rgb in objective[i]:
+            # Calculate maximum range of variance. Every rgb value must be in [0, 255].
+            max_gap = objective_rgb if objective_rgb < 128 else 255 - objective_rgb
+
+            # Randomize variable in range
+            if (max_gap > 0):
+                max_gap = randrange(max_gap + 1)
+
+            # Set rgb values to lists.
+            left_rgb, right_rgb = sample((objective_rgb + max_gap, objective_rgb - max_gap), k=2)
+            left[i].append(left_rgb)
+            right[i].append(right_rgb)
+
+    # Validation check.
+    # chk_list = [objective[i][j] * 2 == (left[i][j] + right[i][j]) for i in range(len(objective)) for j in range(len(objective[i]))]
+    # print(chk_list)
+
+    # Shuffle lists. * Shuffle method is deprecated so will not be able to use in future.
+    left = sample(left, k=len(left))
+    right = sample(right, k=len(right))
+
+    return objective, left, right
