@@ -55,4 +55,20 @@ def create_game_val():
     left = sample(left, k=len(left))
     right = sample(right, k=len(right))
 
+    # Transform rgb values to hex values
+    objective = rgb_list_to_hex_list(objective)
+    left = rgb_list_to_hex_list(left)
+    right = rgb_list_to_hex_list(right)
+
     return objective, left, right
+
+def rgb_list_to_hex_list(rgb_list):
+    hex_list = []
+
+    for rgb in rgb_list:
+        hex = 0
+        for i in range(3):
+            hex += rgb[i] * (16 ** (4 - (i * 2)))
+        hex_list.append(hex)
+
+    return hex_list

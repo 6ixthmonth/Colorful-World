@@ -98,22 +98,22 @@ function initObjectives() {
     let objectiveValues = JSON.parse(document.getElementById("objective").value);
     for (let i = 0; i < objectiveValues.length; i++) {
         // let objectiveColor = Phaser.Display.Color.GetColor(objectiveValues[i][0], objectiveValues[i][1], objectiveValues[i][2]);
-        let objectiveColor = objectiveValues[i][0] * (16 ** 4) + objectiveValues[i][1] * (16 ** 2) + objectiveValues[i][2];
-        GAME_COMPONENT.objectives[i].setFillStyle(objectiveColor, 1);
+        // let objectiveColor = objectiveValues[i][0] * (16 ** 4) + objectiveValues[i][1] * (16 ** 2) + objectiveValues[i][2];
+        GAME_COMPONENT.objectives[i].setFillStyle(objectiveValues[i], 1);
     }
 }
 
 function initControllers() {
     let left = JSON.parse(document.getElementById("left").value);
     for (let i = 0; i < left.length; i++) {
-        let c = Phaser.Display.Color.GetColor(left[i][0], left[i][1], left[i][2]);
-        GAME_COMPONENT.leftController[i].setFillStyle(c, 1);
+        // let c = Phaser.Display.Color.GetColor(left[i][0], left[i][1], left[i][2]);
+        GAME_COMPONENT.leftController[i].setFillStyle(left[i], 1);
     }
 
     let right = JSON.parse(document.getElementById("right").value);
     for (let i = 0; i < right.length; i++) {
-        let c = Phaser.Display.Color.GetColor(right[i][0], right[i][1], right[i][2]);
-        GAME_COMPONENT.rightController[i].setFillStyle(c, 1);
+        // let c = Phaser.Display.Color.GetColor(right[i][0], right[i][1], right[i][2]);
+        GAME_COMPONENT.rightController[i].setFillStyle(right[i], 1);
     }
 }
 
