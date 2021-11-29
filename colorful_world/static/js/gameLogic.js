@@ -149,7 +149,7 @@ function createKeys(sceneObj) {
 const ONE_DEG = Math.PI / 180 * 1;
 let isLeftRotating = isRightRotating = false;
 let leftRotateDeg = rightRotateDeg = 0;
-let left_idx = right_idx = cursor_idx = 0;
+let leftIdx = rightIdx = cursorIdx = 0;
 
 function update() {
     // when left or right arrow key has been pressed
@@ -158,28 +158,28 @@ function update() {
 
     // when up or down arrow key has been pressed
     if (this.input.keyboard.checkDown(GAME_COMPONENT.keys.up, 1000)) {
-        GAME_COMPONENT.cursors[(((cursor_idx-- % 3) + 3) % 3)].visible = false;
-        GAME_COMPONENT.cursors[(((cursor_idx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
-        GAME_COMPONENT.cursors[(((cursor_idx % 3) + 3) % 3)].visible = true;
+        GAME_COMPONENT.cursors[(((cursorIdx-- % 3) + 3) % 3)].visible = false;
+        GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
+        GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].visible = true;
     } else if (this.input.keyboard.checkDown(GAME_COMPONENT.keys.down, 1000)) {
-        GAME_COMPONENT.cursors[(((cursor_idx++ % 3) + 3) % 3)].visible = false;
-        GAME_COMPONENT.cursors[(((cursor_idx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
-        GAME_COMPONENT.cursors[(((cursor_idx % 3) + 3) % 3)].visible = true;
+        GAME_COMPONENT.cursors[(((cursorIdx++ % 3) + 3) % 3)].visible = false;
+        GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
+        GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].visible = true;
     }
 
     // when space key has been pressed
     if (this.input.keyboard.checkDown(GAME_COMPONENT.keys.space, 1000)) {
-        GAME_COMPONENT.targets[(((cursor_idx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
-        check();
+        GAME_COMPONENT.targets[(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
+        clearCheck();
     }
 
     if (isLeftRotating) {
         Phaser.Actions.RotateAround(GAME_COMPONENT.leftController, { x: -25, y: 300 }, ONE_DEG * -2);
         leftRotateDeg += 2;
         if (leftRotateDeg % 120 == 0) {
-            left_idx++;
-            GAME_COMPONENT.cursors[(((cursor_idx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
-            GAME_COMPONENT.indicators.left.setFillStyle(GAME_COMPONENT.leftController[(left_idx % 3)].fillColor, 1.0);
+            leftIdx++;
+            GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
+            GAME_COMPONENT.indicators.left.setFillStyle(GAME_COMPONENT.leftController[(leftIdx % 3)].fillColor, 1.0);
             isLeftRotating = false;
         }
     }
@@ -188,29 +188,29 @@ function update() {
         Phaser.Actions.RotateAround(GAME_COMPONENT.rightController, { x: 825, y: 300 }, ONE_DEG * 2);
         rightRotateDeg += 2;
         if (rightRotateDeg % 120 == 0) {
-            right_idx++
-            GAME_COMPONENT.cursors[(((cursor_idx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
-            GAME_COMPONENT.indicators.right.setFillStyle(GAME_COMPONENT.rightController[(right_idx % 3)].fillColor, 1.0);
+            rightIdx++
+            GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
+            GAME_COMPONENT.indicators.right.setFillStyle(GAME_COMPONENT.rightController[(rightIdx % 3)].fillColor, 1.0);
             isRightRotating = false;
         }
     }
 }
 
 function getMixedColor() {
-    let leftColor = GAME_COMPONENT.leftController[(left_idx % 3)].fillColor;
+    let leftColor = GAME_COMPONENT.leftController[(leftIdx % 3)].fillColor;
     let leftRgb = Phaser.Display.Color.IntegerToRGB(leftColor);
 
-    let rightColor = GAME_COMPONENT.rightController[(right_idx % 3)].fillColor;
+    let rightColor = GAME_COMPONENT.rightController[(rightIdx % 3)].fillColor;
     let rightRgb = Phaser.Display.Color.IntegerToRGB(rightColor);
 
-    let combinedColor = Phaser.Display.Color.GetColor((leftRgb.r + rightRgb.r) / 2, (leftRgb.g + rightRgb.g) / 2, (leftRgb.b + rightRgb.b) / 2);
-    return combinedColor;
+    let mixedColor = Phaser.Display.Color.GetColor((leftRgb.r + rightRgb.r) / 2, (leftRgb.g + rightRgb.g) / 2, (leftRgb.b + rightRgb.b) / 2);
+    return mixedColor;
 }
 
-function check() {
+function clearCheck() {
     let flag = true;
 
-    for (let i = 0; i < GAME_COMPONENT.targets.length; i++) {
+    for (let i = 0; i < GAME_COMPONENT.objectives.length; i++) {
         let objectiveColor = GAME_COMPONENT.objectives[i].fillColor;
         let targetColor = GAME_COMPONENT.targets[i].fillColor;
         if (objectiveColor != targetColor) {
