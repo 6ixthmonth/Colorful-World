@@ -36,20 +36,20 @@ function create() {
     createKeys(this);
 }
 
-function createBackground(sceneObj) {
-    sceneObj.add.circle(400, 0, 150, WHITE, 0.0).setStrokeStyle(5, BLACK);
-    sceneObj.add.circle(-25, 300, 100, WHITE, 0.0).setStrokeStyle(5, BLACK);
-    sceneObj.add.circle(825, 300, 100, WHITE, 0.0).setStrokeStyle(5, BLACK);
+function createBackground() {
+    Phaser.Scene.add.circle(400, 0, 150, WHITE, 0.0).setStrokeStyle(5, BLACK);
+    Phaser.Scene.add.circle(-25, 300, 100, WHITE, 0.0).setStrokeStyle(5, BLACK);
+    Phaser.Scene.add.circle(825, 300, 100, WHITE, 0.0).setStrokeStyle(5, BLACK);
 }
 
-function createTargets(sceneObj) {
-    GAME_COMPONENT.targets = []
+function createTargets() {
+    GAME_COMPONENT["targets"] = []
 
-    GAME_COMPONENT.targets[0] = sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(1);
-    GAME_COMPONENT.targets[1] = sceneObj.add.rectangle(400, 350, 100, 100, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(3);
-    GAME_COMPONENT.targets[2] = sceneObj.add.rectangle(400, 350, 50, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(5);
-    sceneObj.add.rectangle(400, 350, 50, 10, BLACK).setDepth(7);
-    sceneObj.add.rectangle(400, 350, 10, 50, BLACK).setDepth(7);
+    GAME_COMPONENT["targets"].push(Phaser.Scene.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(1));
+    GAME_COMPONENT["targets"].push(Phaser.Scene.add.rectangle(400, 350, 100, 100, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(3));
+    GAME_COMPONENT["targets"].push(Phaser.Scene.add.rectangle(400, 350, 50, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(5));
+    Phaser.Scene.add.rectangle(400, 350, 50, 10, BLACK).setDepth(7);
+    Phaser.Scene.add.rectangle(400, 350, 10, 50, BLACK).setDepth(7);
 }
 
 function createObjectives(sceneObj) {
@@ -143,7 +143,7 @@ function initIndicators(sceneObj) {
 }
 
 function createKeys(sceneObj) {
-    GAME_COMPONENT.keys = sceneObj.input.keyboard.createCursorKeys();
+    GAME_COMPONENT["keys"] = sceneObj.input.keyboard.createCursorKeys();
 }
 
 const ONE_DEG = Math.PI / 180 * 1;
