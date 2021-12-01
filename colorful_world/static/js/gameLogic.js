@@ -36,20 +36,22 @@ function create() {
     createKeys(this);
 }
 
-function createBackground() {
-    Phaser.Scene.add.circle(400, 0, 150, WHITE, 0.0).setStrokeStyle(5, BLACK);
-    Phaser.Scene.add.circle(-25, 300, 100, WHITE, 0.0).setStrokeStyle(5, BLACK);
-    Phaser.Scene.add.circle(825, 300, 100, WHITE, 0.0).setStrokeStyle(5, BLACK);
+/* Create untransformable game objects */
+function createBackground(sceneObj) {
+    sceneObj.add.circle(400, 0, 150, WHITE, 0.0).setStrokeStyle(5, BLACK);
+    sceneObj.add.circle(-25, 300, 100, WHITE, 0.0).setStrokeStyle(5, BLACK);
+    sceneObj.add.circle(825, 300, 100, WHITE, 0.0).setStrokeStyle(5, BLACK);
 }
 
-function createTargets() {
+/* Create target game objects to fill color. */
+function createTargets(sceneObj) {
     GAME_COMPONENT["targets"] = []
 
-    GAME_COMPONENT["targets"].push(Phaser.Scene.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(1));
-    GAME_COMPONENT["targets"].push(Phaser.Scene.add.rectangle(400, 350, 100, 100, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(3));
-    GAME_COMPONENT["targets"].push(Phaser.Scene.add.rectangle(400, 350, 50, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(5));
-    Phaser.Scene.add.rectangle(400, 350, 50, 10, BLACK).setDepth(7);
-    Phaser.Scene.add.rectangle(400, 350, 10, 50, BLACK).setDepth(7);
+    GAME_COMPONENT["targets"].push(sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(1));
+    GAME_COMPONENT["targets"].push(sceneObj.add.rectangle(400, 350, 100, 100, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(3));
+    GAME_COMPONENT["targets"].push(sceneObj.add.rectangle(400, 350, 50, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(5));
+    sceneObj.add.rectangle(400, 350, 50, 10, BLACK).setDepth(7);
+    sceneObj.add.rectangle(400, 350, 10, 50, BLACK).setDepth(7);
 }
 
 function createObjectives(sceneObj) {
