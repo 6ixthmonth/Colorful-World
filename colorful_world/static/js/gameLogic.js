@@ -37,48 +37,54 @@ function create() {
 }
 
 /* Create untransformable game objects */
-function createBackground(sceneObj) {
-    sceneObj.add.circle(400, 0, 150, WHITE, 0.0).setStrokeStyle(5, BLACK);
-    sceneObj.add.circle(-25, 300, 100, WHITE, 0.0).setStrokeStyle(5, BLACK);
-    sceneObj.add.circle(825, 300, 100, WHITE, 0.0).setStrokeStyle(5, BLACK);
+function createBackground(scene) {
+    scene.add.circle(400, 0, 150, WHITE, 0.0).setStrokeStyle(5, BLACK);
+    scene.add.circle(-25, 300, 100, WHITE, 0.0).setStrokeStyle(5, BLACK);
+    scene.add.circle(825, 300, 100, WHITE, 0.0).setStrokeStyle(5, BLACK);
 }
 
 /* Create target game objects to fill color. */
-function createTargets(sceneObj) {
-    GAME_COMPONENT["targets"] = []
+function createTargets(scene) {
+    GAME_COMPONENT["targets"] = [];
 
-    GAME_COMPONENT["targets"].push(sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(1));
-    GAME_COMPONENT["targets"].push(sceneObj.add.rectangle(400, 350, 100, 100, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(3));
-    GAME_COMPONENT["targets"].push(sceneObj.add.rectangle(400, 350, 50, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(5));
-    sceneObj.add.rectangle(400, 350, 50, 10, BLACK).setDepth(7);
-    sceneObj.add.rectangle(400, 350, 10, 50, BLACK).setDepth(7);
+    GAME_COMPONENT["targets"].push(scene.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(1));
+    GAME_COMPONENT["targets"].push(scene.add.rectangle(400, 350, 100, 100, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(3));
+    GAME_COMPONENT["targets"].push(scene.add.rectangle(400, 350, 50, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(5));
+    scene.add.rectangle(400, 350, 50, 10, BLACK).setDepth(7);
+    scene.add.rectangle(400, 350, 10, 50, BLACK).setDepth(7);
 }
 
-function createObjectives(sceneObj) {
-    GAME_COMPONENT.objectives = []
+/* Create objective game objects to ensure goal */
+function createObjectives(scene) {
+    GAME_COMPONENT["objectives"] = [];
 
-    GAME_COMPONENT.objectives[0] = sceneObj.add.triangle(400, 60, 0, 25, 50, -25, 100, 25, WHITE, 1.0).setStrokeStyle(1, BLACK);
-    GAME_COMPONENT.objectives[1] = sceneObj.add.rectangle(400, 85, 50, 50, WHITE, 1.0).setStrokeStyle(1, BLACK);
-    GAME_COMPONENT.objectives[2] = sceneObj.add.rectangle(400, 85, 25, 25, WHITE, 1.0).setStrokeStyle(1, BLACK);
-    sceneObj.add.rectangle(400, 85, 25, 5, BLACK);
-    sceneObj.add.rectangle(400, 85, 5, 25, BLACK);
+    GAME_COMPONENT["objectives"].push(scene.add.triangle(400, 60, 0, 25, 50, -25, 100, 25, WHITE, 1.0).setStrokeStyle(1, BLACK));
+    GAME_COMPONENT["objectives"].push(scene.add.rectangle(400, 85, 50, 50, WHITE, 1.0).setStrokeStyle(1, BLACK));
+    GAME_COMPONENT["objectives"].push(scene.add.rectangle(400, 85, 25, 25, WHITE, 1.0).setStrokeStyle(1, BLACK));
+    scene.add.rectangle(400, 85, 25, 5, BLACK);
+    scene.add.rectangle(400, 85, 5, 25, BLACK);
 }
 
-function createControllers(sceneObj) {
-    let circleRadius = 50;
-    let signDistance = Math.sin(Math.PI / 180 * 60) * circleRadius * 2;
+/* Create controllable game objects */
+function createControllers(scene) {
+    let radius = 50; // unit: pixel
+    let sinY = Math.sin(Math.PI / 180 * 60) * radius * 2;
 
-    // start from right, locate clockwisely
+    let leftCenterX = -25;
+    let rightCenterX = 825;
+    let leftCenterY = rightCenterY = 300;
+
+    // Start from right, place clockwisely
     GAME_COMPONENT.leftController = []
-    GAME_COMPONENT.leftController[0] = sceneObj.add.circle(-25 + 100, 300 + 0, circleRadius, 0xff0000).setStrokeStyle(5, BLACK);
-    GAME_COMPONENT.leftController[1] = sceneObj.add.circle(-25 -50, 300 + signDistance, circleRadius, 0x00ff00).setStrokeStyle(5, BLACK);
-    GAME_COMPONENT.leftController[2] = sceneObj.add.circle(-25 -50, 300 - signDistance, circleRadius, 0x0000ff).setStrokeStyle(5, BLACK);
+    GAME_COMPONENT.leftController[0] = scene.add.circle(leftCenterX + radius * 2, leftCenterY + 0, radius, 0xff0000).setStrokeStyle(5, BLACK);
+    GAME_COMPONENT.leftController[1] = scene.add.circle(leftCenterX - radius, leftCenterY + sinY, radius, 0x00ff00).setStrokeStyle(5, BLACK);
+    GAME_COMPONENT.leftController[2] = scene.add.circle(leftCenterX - radius, leftCenterY - sinY, radius, 0x0000ff).setStrokeStyle(5, BLACK);
 
-    // start from left, locate counter-clockwisely
+    // Start from left, place counter-clockwisely
     GAME_COMPONENT.rightController = []
-    GAME_COMPONENT.rightController[0] = sceneObj.add.circle(GAME_WINDOW_WIDTH + 25 - 100, 300 + 0, circleRadius, 0x00ffff).setStrokeStyle(5, BLACK);
-    GAME_COMPONENT.rightController[1] = sceneObj.add.circle(GAME_WINDOW_WIDTH + 25 + 50, 300 + signDistance, circleRadius, 0xff00ff).setStrokeStyle(5, BLACK);
-    GAME_COMPONENT.rightController[2] = sceneObj.add.circle(GAME_WINDOW_WIDTH + 25 + 50, 300 - signDistance, circleRadius, 0xffff00).setStrokeStyle(5, BLACK);
+    GAME_COMPONENT.rightController[0] = scene.add.circle(rightCenterX - radius * 2, rightCenterY + 0, radius, 0x00ffff).setStrokeStyle(5, BLACK);
+    GAME_COMPONENT.rightController[1] = scene.add.circle(rightCenterX + radius, rightCenterY + sinY, radius, 0xff00ff).setStrokeStyle(5, BLACK);
+    GAME_COMPONENT.rightController[2] = scene.add.circle(rightCenterX + radius, rightCenterY - sinY, radius, 0xffff00).setStrokeStyle(5, BLACK);
 }
 
 function createCursors(sceneObj) {
