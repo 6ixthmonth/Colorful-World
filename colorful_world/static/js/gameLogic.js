@@ -17,6 +17,8 @@ const GAME_CONFIG = {
 
 const BLACK = 0x000000;
 const WHITE = 0xffffff;
+const LEFT = 0;
+const RIGHT = 1;
 const GAME_COMPONENT = {};
 
 function create() {
@@ -74,17 +76,22 @@ function createControllers(scene) {
     let rightCenterX = 825;
     let leftCenterY = rightCenterY = 300;
 
-    // Start from right, place clockwisely
-    GAME_COMPONENT.leftController = []
-    GAME_COMPONENT.leftController[0] = scene.add.circle(leftCenterX + radius * 2, leftCenterY + 0, radius, 0xff0000).setStrokeStyle(5, BLACK);
-    GAME_COMPONENT.leftController[1] = scene.add.circle(leftCenterX - radius, leftCenterY + sinY, radius, 0x00ff00).setStrokeStyle(5, BLACK);
-    GAME_COMPONENT.leftController[2] = scene.add.circle(leftCenterX - radius, leftCenterY - sinY, radius, 0x0000ff).setStrokeStyle(5, BLACK);
+    GAME_COMPONENT["controllers"] = [];
 
-    // Start from left, place counter-clockwisely
-    GAME_COMPONENT.rightController = []
-    GAME_COMPONENT.rightController[0] = scene.add.circle(rightCenterX - radius * 2, rightCenterY + 0, radius, 0x00ffff).setStrokeStyle(5, BLACK);
-    GAME_COMPONENT.rightController[1] = scene.add.circle(rightCenterX + radius, rightCenterY + sinY, radius, 0xff00ff).setStrokeStyle(5, BLACK);
-    GAME_COMPONENT.rightController[2] = scene.add.circle(rightCenterX + radius, rightCenterY - sinY, radius, 0xffff00).setStrokeStyle(5, BLACK);
+    // Start from right(0 deg), place clockwisely
+    let leftController = []
+    leftController.push(scene.add.circle(leftCenterX + radius * 2, leftCenterY + 0, radius, 0xff0000).setStrokeStyle(5, BLACK));
+    leftController.push(scene.add.circle(leftCenterX - radius, leftCenterY + sinY, radius, 0x00ff00).setStrokeStyle(5, BLACK));
+    leftController.push(scene.add.circle(leftCenterX - radius, leftCenterY - sinY, radius, 0x0000ff).setStrokeStyle(5, BLACK));
+
+    // Start from left(180 deg), place counter-clockwisely
+    let rightController = []
+    rightController.push(scene.add.circle(rightCenterX - radius * 2, rightCenterY + 0, radius, 0x00ffff).setStrokeStyle(5, BLACK));
+    rightController.push(scene.add.circle(rightCenterX + radius, rightCenterY + sinY, radius, 0xff00ff).setStrokeStyle(5, BLACK));
+    rightController.push(scene.add.circle(rightCenterX + radius, rightCenterY - sinY, radius, 0xffff00).setStrokeStyle(5, BLACK));
+
+    GAME_COMPONENT["controllers"].push(leftController);
+    GAME_COMPONENT["controllers"].push(rightController);
 }
 
 function createCursors(sceneObj) {
@@ -111,13 +118,13 @@ function initObjectives() {
 
 function initControllers() {
     let left = JSON.parse(document.getElementById("left").value);
-    for (let i = 0; i < left.length; i++) {
-        GAME_COMPONENT.leftController[i].setFillStyle(left[i], 1);
-    }
-
     let right = JSON.parse(document.getElementById("right").value);
-    for (let i = 0; i < right.length; i++) {
-        GAME_COMPONENT.rightController[i].setFillStyle(right[i], 1);
+    let colorList = [left, right];
+
+    for (let i = 0; i < GAME_COMPONENT["controllers"].length; i++) {
+        for (let j = 0; j < GAME_COMPONENT["controllers"][i].length; j++) {
+            GAME_COMPONENT["controllers"][i][j] = colorList[i][j];
+        }
     }
 }
 
@@ -182,33 +189,33 @@ function update() {
     }
 
     if (isLeftRotating) {
-        Phaser.Actions.RotateAround(GAME_COMPONENT.leftController, { x: -25, y: 300 }, ONE_DEG * -2);
+        Phaser.Actions.RotateAround(GAME_COMPONENT["controllers"][LEFT], { x: -25, y: 300 }, ONE_DEG * -2);
         leftRotateDeg += 2;
         if (leftRotateDeg % 120 == 0) {
             leftIdx++;
             GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
-            GAME_COMPONENT.indicators.left.setFillStyle(GAME_COMPONENT.leftController[(leftIdx % 3)].fillColor, 1.0);
+            GAME_COMPONENT.indicators.left.setFillStyle(GAME_COMPONENT["controllers"][LEFT][(leftIdx % 3)].fillColor, 1.0);
             isLeftRotating = false;
         }
     }
 
     if (isRightRotating) {
-        Phaser.Actions.RotateAround(GAME_COMPONENT.rightController, { x: 825, y: 300 }, ONE_DEG * 2);
+        Phaser.Actions.RotateAround(GAME_COMPONENT["controllers"][RIGHT], { x: 825, y: 300 }, ONE_DEG * 2);
         rightRotateDeg += 2;
         if (rightRotateDeg % 120 == 0) {
             rightIdx++
             GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
-            GAME_COMPONENT.indicators.right.setFillStyle(GAME_COMPONENT.rightController[(rightIdx % 3)].fillColor, 1.0);
+            GAME_COMPONENT.indicators.right.setFillStyle(GAME_COMPONENT["controllers"][RIGHT][(rightIdx % 3)].fillColor, 1.0);
             isRightRotating = false;
         }
     }
 }
 
 function getMixedColor() {
-    let leftColor = GAME_COMPONENT.leftController[(leftIdx % 3)].fillColor;
+    let leftColor = GAME_COMPONENT["controllers"][(leftIdx % 3)].fillColor;
     let leftRgb = Phaser.Display.Color.IntegerToRGB(leftColor);
 
-    let rightColor = GAME_COMPONENT.rightController[(rightIdx % 3)].fillColor;
+    let rightColor = GAME_COMPONENT["controllers"][(rightIdx % 3)].fillColor;
     let rightRgb = Phaser.Display.Color.IntegerToRGB(rightColor);
 
     let mixedColor = Phaser.Display.Color.GetColor((leftRgb.r + rightRgb.r) / 2, (leftRgb.g + rightRgb.g) / 2, (leftRgb.b + rightRgb.b) / 2);
