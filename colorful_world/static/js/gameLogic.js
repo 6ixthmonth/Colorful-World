@@ -79,13 +79,13 @@ function createControllers(scene) {
     GAME_COMPONENT["controllers"] = [];
 
     // Start from right(0 deg), place clockwisely
-    let leftController = []
+    let leftController = [];
     leftController.push(scene.add.circle(leftCenterX + radius * 2, leftCenterY + 0, radius, 0xff0000).setStrokeStyle(5, BLACK));
     leftController.push(scene.add.circle(leftCenterX - radius, leftCenterY + sinY, radius, 0x00ff00).setStrokeStyle(5, BLACK));
     leftController.push(scene.add.circle(leftCenterX - radius, leftCenterY - sinY, radius, 0x0000ff).setStrokeStyle(5, BLACK));
 
     // Start from left(180 deg), place counter-clockwisely
-    let rightController = []
+    let rightController = [];
     rightController.push(scene.add.circle(rightCenterX - radius * 2, rightCenterY + 0, radius, 0x00ffff).setStrokeStyle(5, BLACK));
     rightController.push(scene.add.circle(rightCenterX + radius, rightCenterY + sinY, radius, 0xff00ff).setStrokeStyle(5, BLACK));
     rightController.push(scene.add.circle(rightCenterX + radius, rightCenterY - sinY, radius, 0xffff00).setStrokeStyle(5, BLACK));
@@ -123,7 +123,7 @@ function initControllers() {
 
     for (let i = 0; i < GAME_COMPONENT["controllers"].length; i++) {
         for (let j = 0; j < GAME_COMPONENT["controllers"][i].length; j++) {
-            GAME_COMPONENT["controllers"][i][j] = colorList[i][j];
+            GAME_COMPONENT["controllers"][i][j].setFillStyle(colorList[i][j], 1.0);
         }
     }
 }
@@ -141,7 +141,7 @@ function initCursors(sceneObj) {
     GAME_COMPONENT.cursors[1].visible = false;
     GAME_COMPONENT.cursors[2].visible = false;
 
-    GAME_COMPONENT.cursors[0].setFillStyle(getMixedColor(), 1);
+    GAME_COMPONENT.cursors[0].setFillStyle(getMixedColor(), 1.0);
 }
 
 function initIndicators(sceneObj) {
@@ -153,8 +153,8 @@ function initIndicators(sceneObj) {
         ease: "Sine.easeInOut"
     });
     
-    GAME_COMPONENT.indicators.left.setFillStyle(GAME_COMPONENT.leftController[0].fillColor, 1.0);
-    GAME_COMPONENT.indicators.right.setFillStyle(GAME_COMPONENT.rightController[0].fillColor, 1.0);
+    GAME_COMPONENT.indicators.left.setFillStyle(GAME_COMPONENT["controllers"][LEFT][0].fillColor, 1.0);
+    GAME_COMPONENT.indicators.right.setFillStyle(GAME_COMPONENT["controllers"][RIGHT][0].fillColor, 1.0);
 }
 
 function createKeys(sceneObj) {
@@ -212,13 +212,14 @@ function update() {
 }
 
 function getMixedColor() {
-    let leftColor = GAME_COMPONENT["controllers"][(leftIdx % 3)].fillColor;
+    let leftColor = GAME_COMPONENT["controllers"][LEFT][(leftIdx % 3)].fillColor;
     let leftRgb = Phaser.Display.Color.IntegerToRGB(leftColor);
 
-    let rightColor = GAME_COMPONENT["controllers"][(rightIdx % 3)].fillColor;
+    let rightColor = GAME_COMPONENT["controllers"][RIGHT][(rightIdx % 3)].fillColor;
     let rightRgb = Phaser.Display.Color.IntegerToRGB(rightColor);
 
     let mixedColor = Phaser.Display.Color.GetColor((leftRgb.r + rightRgb.r) / 2, (leftRgb.g + rightRgb.g) / 2, (leftRgb.b + rightRgb.b) / 2);
+
     return mixedColor;
 }
 
