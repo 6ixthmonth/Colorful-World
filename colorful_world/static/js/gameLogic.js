@@ -74,39 +74,41 @@ function createControllers(scene) {
 
     let leftCenterX = -25;
     let rightCenterX = 825;
-    let leftCenterY = rightCenterY = 300;
+    let centerY = 300;
 
     GAME_COMPONENT["controllers"] = [];
 
     // Start from right(0 deg), place clockwisely
     let leftController = [];
-    leftController.push(scene.add.circle(leftCenterX + radius * 2, leftCenterY + 0, radius, 0xff0000).setStrokeStyle(5, BLACK));
-    leftController.push(scene.add.circle(leftCenterX - radius, leftCenterY + sinY, radius, 0x00ff00).setStrokeStyle(5, BLACK));
-    leftController.push(scene.add.circle(leftCenterX - radius, leftCenterY - sinY, radius, 0x0000ff).setStrokeStyle(5, BLACK));
+    leftController.push(scene.add.circle(leftCenterX + radius * 2, centerY + 0, radius, 0xff0000).setStrokeStyle(5, BLACK));
+    leftController.push(scene.add.circle(leftCenterX - radius, centerY + sinY, radius, 0x00ff00).setStrokeStyle(5, BLACK));
+    leftController.push(scene.add.circle(leftCenterX - radius, centerY - sinY, radius, 0x0000ff).setStrokeStyle(5, BLACK));
 
     // Start from left(180 deg), place counter-clockwisely
     let rightController = [];
-    rightController.push(scene.add.circle(rightCenterX - radius * 2, rightCenterY + 0, radius, 0x00ffff).setStrokeStyle(5, BLACK));
-    rightController.push(scene.add.circle(rightCenterX + radius, rightCenterY + sinY, radius, 0xff00ff).setStrokeStyle(5, BLACK));
-    rightController.push(scene.add.circle(rightCenterX + radius, rightCenterY - sinY, radius, 0xffff00).setStrokeStyle(5, BLACK));
+    rightController.push(scene.add.circle(rightCenterX - radius * 2, centerY + 0, radius, 0x00ffff).setStrokeStyle(5, BLACK));
+    rightController.push(scene.add.circle(rightCenterX + radius, centerY + sinY, radius, 0xff00ff).setStrokeStyle(5, BLACK));
+    rightController.push(scene.add.circle(rightCenterX + radius, centerY - sinY, radius, 0xffff00).setStrokeStyle(5, BLACK));
 
     GAME_COMPONENT["controllers"].push(leftController);
     GAME_COMPONENT["controllers"].push(rightController);
 }
 
+/* Create cursor game objects display selected target */
 function createCursors(sceneObj) {
-    GAME_COMPONENT.cursors = []
+    GAME_COMPONENT["cursors"] = []
     
-    GAME_COMPONENT.cursors[0] = sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(2);
-    GAME_COMPONENT.cursors[1] = sceneObj.add.rectangle(400, 350, 100, 100, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(4);
-    GAME_COMPONENT.cursors[2] = sceneObj.add.rectangle(400, 350, 50, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(6);
+    GAME_COMPONENT["cursors"].push(sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(2));
+    GAME_COMPONENT["cursors"].push(sceneObj.add.rectangle(400, 350, 100, 100, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(4));
+    GAME_COMPONENT["cursors"].push(sceneObj.add.rectangle(400, 350, 50, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(6));
 }
 
+/* Create indicator game objects display selected controller */
 function createIndicators(sceneObj) {
-    GAME_COMPONENT.indicators = {}
+    GAME_COMPONENT["indicators"] = {}
     
-    GAME_COMPONENT.indicators.left = sceneObj.add.triangle(200, 300, 0, 0, 0, 100, 100, 50, WHITE, 1.0);
-    GAME_COMPONENT.indicators.right = sceneObj.add.triangle(600, 300, 0, 50, 100, 0, 100, 100, WHITE, 1.0);
+    GAME_COMPONENT["indicators"]["left"] = sceneObj.add.triangle(200, 300, 0, 0, 0, 100, 100, 50, WHITE, 1.0);
+    GAME_COMPONENT["indicators"]["right"] = sceneObj.add.triangle(600, 300, 0, 50, 100, 0, 100, 100, WHITE, 1.0);
 }
 
 function initObjectives() {
