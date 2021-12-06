@@ -105,10 +105,10 @@ function createCursors(sceneObj) {
 
 /* Create indicator game objects display selected controller */
 function createIndicators(sceneObj) {
-    GAME_COMPONENT["indicators"] = {}
+    GAME_COMPONENT["indicators"] = []
     
-    GAME_COMPONENT["indicators"]["left"] = sceneObj.add.triangle(200, 300, 0, 0, 0, 100, 100, 50, WHITE, 1.0);
-    GAME_COMPONENT["indicators"]["right"] = sceneObj.add.triangle(600, 300, 0, 50, 100, 0, 100, 100, WHITE, 1.0);
+    GAME_COMPONENT["indicators"].push(sceneObj.add.triangle(200, 300, 0, 0, 0, 100, 100, 50, WHITE, 1.0));
+    GAME_COMPONENT["indicators"].push(sceneObj.add.triangle(600, 300, 0, 50, 100, 0, 100, 100, WHITE, 1.0));
 }
 
 function initObjectives() {
@@ -155,8 +155,8 @@ function initIndicators(sceneObj) {
         ease: "Sine.easeInOut"
     });
     
-    GAME_COMPONENT.indicators.left.setFillStyle(GAME_COMPONENT["controllers"][LEFT][0].fillColor, 1.0);
-    GAME_COMPONENT.indicators.right.setFillStyle(GAME_COMPONENT["controllers"][RIGHT][0].fillColor, 1.0);
+    GAME_COMPONENT["indicators"][LEFT].setFillStyle(GAME_COMPONENT["controllers"][LEFT][0].fillColor, 1.0);
+    GAME_COMPONENT["indicators"][RIGHT].setFillStyle(GAME_COMPONENT["controllers"][RIGHT][0].fillColor, 1.0);
 }
 
 function createKeys(sceneObj) {
@@ -196,7 +196,7 @@ function update() {
         if (leftRotateDeg % 120 == 0) {
             leftIdx++;
             GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
-            GAME_COMPONENT.indicators.left.setFillStyle(GAME_COMPONENT["controllers"][LEFT][(leftIdx % 3)].fillColor, 1.0);
+            GAME_COMPONENT["indicators"][LEFT].setFillStyle(GAME_COMPONENT["controllers"][LEFT][(leftIdx % 3)].fillColor, 1.0);
             isLeftRotating = false;
         }
     }
@@ -207,7 +207,7 @@ function update() {
         if (rightRotateDeg % 120 == 0) {
             rightIdx++
             GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
-            GAME_COMPONENT.indicators.right.setFillStyle(GAME_COMPONENT["controllers"][RIGHT][(rightIdx % 3)].fillColor, 1.0);
+            GAME_COMPONENT["indicators"][RIGHT].setFillStyle(GAME_COMPONENT["controllers"][RIGHT][(rightIdx % 3)].fillColor, 1.0);
             isRightRotating = false;
         }
     }
