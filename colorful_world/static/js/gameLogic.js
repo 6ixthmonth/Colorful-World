@@ -21,6 +21,12 @@ const LEFT = 0;
 const RIGHT = 1;
 const GAME_COMPONENT = {};
 
+let tweensConfig = {
+    yoyo: true,
+    repeat: -1,
+    ease: "Sine.easeInOut"
+};
+
 function create() {
     createBackground(this);
     createTargets(this);
@@ -111,13 +117,15 @@ function createIndicators(sceneObj) {
     GAME_COMPONENT["indicators"].push(sceneObj.add.triangle(600, 300, 0, 50, 100, 0, 100, 100, WHITE, 1.0));
 }
 
+/* Fill colors to objective game objects */
 function initObjectives() {
     let objective = JSON.parse(document.getElementById("objective").value);
     for (let i = 0; i < objective.length; i++) {
-        GAME_COMPONENT.objectives[i].setFillStyle(objective[i], 1);
+        GAME_COMPONENT["objectives"][i].setFillStyle(objective[i], 1);
     }
 }
 
+/* Fill colors to controllable game objects */
 function initControllers() {
     let left = JSON.parse(document.getElementById("left").value);
     let right = JSON.parse(document.getElementById("right").value);
@@ -130,33 +138,27 @@ function initControllers() {
     }
 }
 
+/* Fill colors and set tweens effect to cursors */
 function initCursors(sceneObj) {
-    sceneObj.tweens.add({
-        targets: GAME_COMPONENT.cursors,
-        alpha: 0.0,
-        yoyo: true,
-        repeat: -1,
-        ease: "Sine.easeInOut"
-    });
+    GAME_COMPONENT["cursors"][0].setFillStyle(getMixedColor(), 1.0);
 
-    GAME_COMPONENT.cursors[0].visible = true;
-    GAME_COMPONENT.cursors[1].visible = false;
-    GAME_COMPONENT.cursors[2].visible = false;
+    GAME_COMPONENT["cursors"][0].visible = true;
+    GAME_COMPONENT["cursors"][1].visible = false;
+    GAME_COMPONENT["cursors"][2].visible = false;
 
-    GAME_COMPONENT.cursors[0].setFillStyle(getMixedColor(), 1.0);
+    tweensConfig["targets"] = GAME_COMPONENT["cursors"];
+    tweensConfig["alpha"] = 0.0;
+    sceneObj.tweens.add(tweensConfig);
 }
 
+/* Fill colors and set tweens effect to indicators */
 function initIndicators(sceneObj) {
-    sceneObj.tweens.add({
-        targets: [GAME_COMPONENT.indicators.left, GAME_COMPONENT.indicators.right],
-        alpha: 0.5,
-        yoyo: true,
-        repeat: -1,
-        ease: "Sine.easeInOut"
-    });
-    
     GAME_COMPONENT["indicators"][LEFT].setFillStyle(GAME_COMPONENT["controllers"][LEFT][0].fillColor, 1.0);
     GAME_COMPONENT["indicators"][RIGHT].setFillStyle(GAME_COMPONENT["controllers"][RIGHT][0].fillColor, 1.0);
+
+    tweensConfig["targets"] = GAME_COMPONENT["indicators"];
+    tweensConfig["alpha"] = 0.5;
+    sceneObj.tweens.add(tweensConfig);
 }
 
 function createKeys(sceneObj) {
