@@ -177,18 +177,18 @@ function update() {
 
     // when up or down arrow key has been pressed
     if (this.input.keyboard.checkDown(GAME_COMPONENT.keys.up, 1000)) {
-        GAME_COMPONENT.cursors[(((cursorIdx-- % 3) + 3) % 3)].visible = false;
-        GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
-        GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].visible = true;
+        GAME_COMPONENT["cursors"][(((cursorIdx-- % 3) + 3) % 3)].visible = false;
+        GAME_COMPONENT["cursors"][(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
+        GAME_COMPONENT["cursors"][(((cursorIdx % 3) + 3) % 3)].visible = true;
     } else if (this.input.keyboard.checkDown(GAME_COMPONENT.keys.down, 1000)) {
-        GAME_COMPONENT.cursors[(((cursorIdx++ % 3) + 3) % 3)].visible = false;
-        GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
-        GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].visible = true;
+        GAME_COMPONENT["cursors"][(((cursorIdx++ % 3) + 3) % 3)].visible = false;
+        GAME_COMPONENT["cursors"][(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
+        GAME_COMPONENT["cursors"][(((cursorIdx % 3) + 3) % 3)].visible = true;
     }
 
     // when space key has been pressed
     if (this.input.keyboard.checkDown(GAME_COMPONENT.keys.space, 1000)) {
-        GAME_COMPONENT.targets[(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
+        GAME_COMPONENT["targets"][(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
         clearCheck();
     }
 
@@ -197,7 +197,7 @@ function update() {
         leftRotateDeg += 2;
         if (leftRotateDeg % 120 == 0) {
             leftIdx++;
-            GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
+            GAME_COMPONENT["cursors"][(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
             GAME_COMPONENT["indicators"][LEFT].setFillStyle(GAME_COMPONENT["controllers"][LEFT][(leftIdx % 3)].fillColor, 1.0);
             isLeftRotating = false;
         }
@@ -208,7 +208,7 @@ function update() {
         rightRotateDeg += 2;
         if (rightRotateDeg % 120 == 0) {
             rightIdx++
-            GAME_COMPONENT.cursors[(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
+            GAME_COMPONENT["cursors"][(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
             GAME_COMPONENT["indicators"][RIGHT].setFillStyle(GAME_COMPONENT["controllers"][RIGHT][(rightIdx % 3)].fillColor, 1.0);
             isRightRotating = false;
         }
@@ -230,9 +230,9 @@ function getMixedColor() {
 function clearCheck() {
     let flag = true;
 
-    for (let i = 0; i < GAME_COMPONENT.objectives.length; i++) {
-        let objectiveColor = GAME_COMPONENT.objectives[i].fillColor;
-        let targetColor = GAME_COMPONENT.targets[i].fillColor;
+    for (let i = 0; i < GAME_COMPONENT["objectives"].length; i++) {
+        let objectiveColor = GAME_COMPONENT["objectives"][i].fillColor;
+        let targetColor = GAME_COMPONENT["targets"][i].fillColor;
         if (objectiveColor != targetColor) {
             flag = false;
             break;
