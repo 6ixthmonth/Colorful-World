@@ -44,7 +44,7 @@ function create() {
     createKeys(this);
 }
 
-/* Create untransformable game objects */
+/* Create untransformable game objects. */
 function createBackground(scene) {
     scene.add.circle(400, 0, 150, WHITE, 0.0).setStrokeStyle(5, BLACK);
     scene.add.circle(-25, 300, 100, WHITE, 0.0).setStrokeStyle(5, BLACK);
@@ -62,7 +62,7 @@ function createTargets(scene) {
     scene.add.rectangle(400, 350, 10, 50, BLACK).setDepth(7);
 }
 
-/* Create objective game objects to ensure goal */
+/* Create objective game objects to ensure goal. */
 function createObjectives(scene) {
     GAME_COMPONENT["objectives"] = [];
 
@@ -73,7 +73,7 @@ function createObjectives(scene) {
     scene.add.rectangle(400, 85, 5, 25, BLACK);
 }
 
-/* Create controllable game objects */
+/* Create controllable game objects. */
 function createControllers(scene) {
     let radius = 50; // unit: pixel
     let sinY = Math.sin(Math.PI / 180 * 60) * radius * 2;
@@ -84,13 +84,13 @@ function createControllers(scene) {
 
     GAME_COMPONENT["controllers"] = [];
 
-    // Start from right(0 deg), place clockwisely
+    // start from right(0 deg), place clockwisely.
     let leftController = [];
     leftController.push(scene.add.circle(leftCenterX + radius * 2, centerY + 0, radius, 0xff0000).setStrokeStyle(5, BLACK));
     leftController.push(scene.add.circle(leftCenterX - radius, centerY + sinY, radius, 0x00ff00).setStrokeStyle(5, BLACK));
     leftController.push(scene.add.circle(leftCenterX - radius, centerY - sinY, radius, 0x0000ff).setStrokeStyle(5, BLACK));
 
-    // Start from left(180 deg), place counter-clockwisely
+    // start from left(180 deg), place counter-clockwisely.
     let rightController = [];
     rightController.push(scene.add.circle(rightCenterX - radius * 2, centerY + 0, radius, 0x00ffff).setStrokeStyle(5, BLACK));
     rightController.push(scene.add.circle(rightCenterX + radius, centerY + sinY, radius, 0xff00ff).setStrokeStyle(5, BLACK));
@@ -100,7 +100,7 @@ function createControllers(scene) {
     GAME_COMPONENT["controllers"].push(rightController);
 }
 
-/* Create cursor game objects display selected target */
+/* Create cursor game objects display selected target. */
 function createCursors(sceneObj) {
     GAME_COMPONENT["cursors"] = []
     
@@ -109,7 +109,7 @@ function createCursors(sceneObj) {
     GAME_COMPONENT["cursors"].push(sceneObj.add.rectangle(400, 350, 50, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(6));
 }
 
-/* Create indicator game objects display selected controller */
+/* Create indicator game objects display selected controller. */
 function createIndicators(sceneObj) {
     GAME_COMPONENT["indicators"] = []
     
@@ -117,7 +117,7 @@ function createIndicators(sceneObj) {
     GAME_COMPONENT["indicators"].push(sceneObj.add.triangle(600, 300, 0, 50, 100, 0, 100, 100, WHITE, 1.0));
 }
 
-/* Fill colors to objective game objects */
+/* Fill colors to objective game objects. */
 function initObjectives() {
     let objective = JSON.parse(document.getElementById("objective").value);
     for (let i = 0; i < objective.length; i++) {
@@ -125,7 +125,7 @@ function initObjectives() {
     }
 }
 
-/* Fill colors to controllable game objects */
+/* Fill colors to controllable game objects. */
 function initControllers() {
     let left = JSON.parse(document.getElementById("left").value);
     let right = JSON.parse(document.getElementById("right").value);
@@ -138,7 +138,7 @@ function initControllers() {
     }
 }
 
-/* Fill colors and set tweens effect to cursors */
+/* Fill colors and set tweens effect to cursors. */
 function initCursors(sceneObj) {
     GAME_COMPONENT["cursors"][0].setFillStyle(getMixedColor(), 1.0);
 
@@ -151,7 +151,7 @@ function initCursors(sceneObj) {
     sceneObj.tweens.add(tweensConfig);
 }
 
-/* Fill colors and set tweens effect to indicators */
+/* Fill colors and set tweens effect to indicators. */
 function initIndicators(sceneObj) {
     GAME_COMPONENT["indicators"][LEFT].setFillStyle(GAME_COMPONENT["controllers"][LEFT][0].fillColor, 1.0);
     GAME_COMPONENT["indicators"][RIGHT].setFillStyle(GAME_COMPONENT["controllers"][RIGHT][0].fillColor, 1.0);
@@ -161,6 +161,7 @@ function initIndicators(sceneObj) {
     sceneObj.tweens.add(tweensConfig);
 }
 
+/* Make the game to be able to detect key input. */
 function createKeys(sceneObj) {
     GAME_COMPONENT["keys"] = sceneObj.input.keyboard.createCursorKeys();
 }
@@ -171,11 +172,11 @@ let leftRotateDeg = rightRotateDeg = 0;
 let leftIdx = rightIdx = cursorIdx = 0;
 
 function update() {
-    // when left or right arrow key has been pressed
+    // when left or right arrow key has been pressed,
     if (this.input.keyboard.checkDown(GAME_COMPONENT.keys.left, 1000)) { isLeftRotating = true; }
     else if (this.input.keyboard.checkDown(GAME_COMPONENT.keys.right, 1000)) { isRightRotating = true; }
 
-    // when up or down arrow key has been pressed
+    // when up or down arrow key has been pressed,
     if (this.input.keyboard.checkDown(GAME_COMPONENT.keys.up, 1000)) {
         GAME_COMPONENT["cursors"][(((cursorIdx-- % 3) + 3) % 3)].visible = false;
         GAME_COMPONENT["cursors"][(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
@@ -186,10 +187,12 @@ function update() {
         GAME_COMPONENT["cursors"][(((cursorIdx % 3) + 3) % 3)].visible = true;
     }
 
-    // when space key has been pressed
+    // when space key has been pressed,
     if (this.input.keyboard.checkDown(GAME_COMPONENT.keys.space, 1000)) {
         GAME_COMPONENT["targets"][(((cursorIdx % 3) + 3) % 3)].setFillStyle(getMixedColor(), 1);
-        clearCheck();
+        if (checkStageClear()) {
+            $("#stageClearModal").modal("show");
+        }
     }
 
     if (isLeftRotating) {
@@ -227,23 +230,19 @@ function getMixedColor() {
     return mixedColor;
 }
 
-function clearCheck() {
-    let flag = true;
+function checkStageClear() {
+    let result = true;
 
     for (let i = 0; i < GAME_COMPONENT["objectives"].length; i++) {
         let objectiveColor = GAME_COMPONENT["objectives"][i].fillColor;
         let targetColor = GAME_COMPONENT["targets"][i].fillColor;
         if (objectiveColor != targetColor) {
-            flag = false;
+            result = false;
             break;
         }
     }
 
-    if (flag) stageClear();
-}
-
-function stageClear() {
-    $("#stageClearModal").modal("show");
+    return result;
 }
 
 function reset() {
