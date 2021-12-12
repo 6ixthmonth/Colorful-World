@@ -195,6 +195,7 @@ function update() {
         }
     }
 
+    // after left arrow key was pressed, lotate left controller counter-clockwisely until 120 degrees.
     if (isLeftRotating) {
         Phaser.Actions.RotateAround(GAME_COMPONENT["controllers"][LEFT], { x: -25, y: 300 }, ONE_DEG * -2);
         leftRotateDeg += 2;
@@ -206,6 +207,7 @@ function update() {
         }
     }
 
+    // after right arrow key was pressed, lotate right controller clockwisely until 120 degrees.
     if (isRightRotating) {
         Phaser.Actions.RotateAround(GAME_COMPONENT["controllers"][RIGHT], { x: 825, y: 300 }, ONE_DEG * 2);
         rightRotateDeg += 2;
@@ -218,6 +220,7 @@ function update() {
     }
 }
 
+// Get mixed color by selected left & right color selections.
 function getMixedColor() {
     let leftColor = GAME_COMPONENT["controllers"][LEFT][(leftIdx % 3)].fillColor;
     let leftRgb = Phaser.Display.Color.IntegerToRGB(leftColor);
