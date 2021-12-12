@@ -1,5 +1,5 @@
 # Phaser 기반으로 구현한 퍼즐 장르의 웹 게임 - Colorful World
-<img width="640" height="360" src="https://user-images.githubusercontent.com/42332051/141237238-44b1340f-7085-40cb-b97d-275f6581c26f.gif">
+<img width="960" height="540" src="https://user-images.githubusercontent.com/42332051/141237238-44b1340f-7085-40cb-b97d-275f6581c26f.gif">
 
 ## 개요
 주어진 색상 선택지를 이용해서 색상을 합성하여 제시된 정답 색상을 맞추는 게임.
@@ -17,11 +17,14 @@
 
 ## 주요 기능
 1. 메인 페이지
-   - <img width="640" height="360" src="https://user-images.githubusercontent.com/42332051/141237250-07839e8c-751e-4489-a923-ce4976534f30.gif">
+   - <img width="960" height="540" src="https://user-images.githubusercontent.com/42332051/141237250-07839e8c-751e-4489-a923-ce4976534f30.gif">
    - 게임 페이지로 이동할 수 있다.
    - 게임 방법을 모달 형태로 표시하여 알려준다.
 2. 게임 화면
-   - <img width="640" height="360" src="https://user-images.githubusercontent.com/42332051/141237259-e3f57e00-d081-454e-aa3e-a36105dbaba2.gif">
+   - <img width="960" height="540" src="https://user-images.githubusercontent.com/42332051/141237259-e3f57e00-d081-454e-aa3e-a36105dbaba2.gif">
+   - 화면 상단에 랜덤한 색상으로 칠해진 목표 이미지를 표시한다.
+   - 화면 좌, 우측에 랜덤한 색상으로 생성된 선택지 이미지를 표시한다.
+   - 화면 가운데에 칠할 수 있는 바탕 이미지를 표시한다.
    - *위/아래 화살표 키*를 이용해서 **색칠할 바탕을 지정**할 수 있다.
    - *왼쪽/오른쪽 화살표 키*를 이용해서 **왼쪽/오른쪽 색상 팔레트를 회전**시킬 수 있다.
    - *스페이스 키*를 이용해서 **왼쪽/오른쪽 팔레트의 색상을 합성해서 지정된 바탕에 적용**한다.
