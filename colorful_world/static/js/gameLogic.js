@@ -8,7 +8,6 @@ const GAME_CONFIG = {
     title: "Colorful World - Make the World more Colorful",
     backgroundColor: "#ffffff",
     parent: "wrapper",
-    // autoCenter: true,
     scene: {
         create: create,
         update: update
@@ -101,20 +100,20 @@ function createControllers(scene) {
 }
 
 /* Create cursor game objects display selected target. */
-function createCursors(sceneObj) {
+function createCursors(scene) {
     GAME_COMPONENT["cursors"] = []
     
-    GAME_COMPONENT["cursors"].push(sceneObj.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(2));
-    GAME_COMPONENT["cursors"].push(sceneObj.add.rectangle(400, 350, 100, 100, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(4));
-    GAME_COMPONENT["cursors"].push(sceneObj.add.rectangle(400, 350, 50, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(6));
+    GAME_COMPONENT["cursors"].push(scene.add.triangle(400, 300, 0, 50, 100, -50, 200, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(2));
+    GAME_COMPONENT["cursors"].push(scene.add.rectangle(400, 350, 100, 100, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(4));
+    GAME_COMPONENT["cursors"].push(scene.add.rectangle(400, 350, 50, 50, WHITE, 1.0).setStrokeStyle(2, BLACK).setDepth(6));
 }
 
 /* Create indicator game objects display selected controller. */
-function createIndicators(sceneObj) {
+function createIndicators(scene) {
     GAME_COMPONENT["indicators"] = []
     
-    GAME_COMPONENT["indicators"].push(sceneObj.add.triangle(200, 300, 0, 0, 0, 100, 100, 50, WHITE, 1.0));
-    GAME_COMPONENT["indicators"].push(sceneObj.add.triangle(600, 300, 0, 50, 100, 0, 100, 100, WHITE, 1.0));
+    GAME_COMPONENT["indicators"].push(scene.add.triangle(200, 300, 0, 0, 0, 100, 100, 50, WHITE, 1.0));
+    GAME_COMPONENT["indicators"].push(scene.add.triangle(600, 300, 0, 50, 100, 0, 100, 100, WHITE, 1.0));
 }
 
 /* Fill colors to objective game objects. */
@@ -139,7 +138,7 @@ function initControllers() {
 }
 
 /* Fill colors and set tweens effect to cursors. */
-function initCursors(sceneObj) {
+function initCursors(scene) {
     GAME_COMPONENT["cursors"][0].setFillStyle(getMixedColor(), 1.0);
 
     GAME_COMPONENT["cursors"][0].visible = true;
@@ -148,25 +147,30 @@ function initCursors(sceneObj) {
 
     tweensConfig["targets"] = GAME_COMPONENT["cursors"];
     tweensConfig["alpha"] = 0.0;
-    sceneObj.tweens.add(tweensConfig);
+    scene.tweens.add(tweensConfig);
 }
 
 /* Fill colors and set tweens effect to indicators. */
-function initIndicators(sceneObj) {
+function initIndicators(scene) {
     GAME_COMPONENT["indicators"][LEFT].setFillStyle(GAME_COMPONENT["controllers"][LEFT][0].fillColor, 1.0);
     GAME_COMPONENT["indicators"][RIGHT].setFillStyle(GAME_COMPONENT["controllers"][RIGHT][0].fillColor, 1.0);
 
     tweensConfig["targets"] = GAME_COMPONENT["indicators"];
     tweensConfig["alpha"] = 0.5;
-    sceneObj.tweens.add(tweensConfig);
+    scene.tweens.add(tweensConfig);
 }
 
 /* Make the game to be able to detect key input. */
-function createKeys(sceneObj) {
-    GAME_COMPONENT["keys"] = sceneObj.input.keyboard.createCursorKeys();
+function createKeys(scene) {
+    GAME_COMPONENT["keys"] = scene.input.keyboard.createCursorKeys();
 }
 
 const ONE_DEG = Math.PI / 180 * 1;
+const LEFT_EACH_DEG = ONE_DEG * -2;
+const RIGHT_EACH_DEG = ONE_DEG * 2;
+const LEFT_ROTATE_CENTER = { x: -25, y: 300 };
+const RIGHT_ROTATE_CENTER = { x: 825, y: 300 };
+
 let isLeftRotating = isRightRotating = false;
 let leftRotateDeg = rightRotateDeg = 0;
 let leftIdx = rightIdx = cursorIdx = 0;
@@ -197,7 +201,7 @@ function update() {
 
     // after left arrow key was pressed, lotate left controller counter-clockwisely until 120 degrees.
     if (isLeftRotating) {
-        Phaser.Actions.RotateAround(GAME_COMPONENT["controllers"][LEFT], { x: -25, y: 300 }, ONE_DEG * -2);
+        Phaser.Actions.RotateAround(GAME_COMPONENT["controllers"][LEFT], LEFT_ROTATE_CENTER, LEFT_EACH_DEG);
         leftRotateDeg += 2;
         if (leftRotateDeg % 120 == 0) {
             leftIdx++;
@@ -209,7 +213,7 @@ function update() {
 
     // after right arrow key was pressed, lotate right controller clockwisely until 120 degrees.
     if (isRightRotating) {
-        Phaser.Actions.RotateAround(GAME_COMPONENT["controllers"][RIGHT], { x: 825, y: 300 }, ONE_DEG * 2);
+        Phaser.Actions.RotateAround(GAME_COMPONENT["controllers"][RIGHT], RIGHT_ROTATE_CENTER, RIGHT_EACH_DEG);
         rightRotateDeg += 2;
         if (rightRotateDeg % 120 == 0) {
             rightIdx++
@@ -239,6 +243,7 @@ function checkStageClear() {
     for (let i = 0; i < GAME_COMPONENT["objectives"].length; i++) {
         let objectiveColor = GAME_COMPONENT["objectives"][i].fillColor;
         let targetColor = GAME_COMPONENT["targets"][i].fillColor;
+        
         if (objectiveColor != targetColor) {
             result = false;
             break;
