@@ -6,7 +6,7 @@
 
 ---
 
-## 개발 환경 및 사용 API
+## 개발 환경 및 사용 기술
 
 1. Back-end
    - Python 3.9.5
@@ -15,7 +15,7 @@
    - HTML5, CSS3, JavaScript(ECMAScript6)
    - jQuery 3.6.0
    - Bootstrap 5.1.3
-3. API
+3. Framework
    - Phaser 3.55.2
 
 ---
